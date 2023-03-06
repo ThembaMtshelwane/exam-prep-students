@@ -7,6 +7,7 @@ import AuthButtons from './authButtons';
 
 const Navbar:React.FC = () => {
     const [user,loading,error] = useAuthState(auth)
+    
     return(
         <Flex bg='white' height='44px' padding='6px 12px'> 
             <Spacer />

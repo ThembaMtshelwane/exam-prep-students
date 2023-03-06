@@ -1,4 +1,4 @@
-
+import { authModalState } from '@/src/atom/authModalAtom';
 import { Button, Flex, Input, Text} from '@chakra-ui/react';
 import React,{useState} from 'react';
 import {useSetRecoilState} from 'recoil'
@@ -6,7 +6,6 @@ import {useSignInWithEmailAndPassword} from 'react-firebase-hooks/auth'
 import {auth} from '../../../firebase/clientApp'
 import {FIREBASE_ERRORS} from '../../../firebase/errors'
 import {useRouter} from 'next/router'
-import { authModalState } from '@/src/atom/authAtom';
 
 type LoginProps = {};
 
@@ -30,7 +29,7 @@ const Login:React.FC<LoginProps> = () => {
         event.preventDefault()
 
        signInWithEmailAndPassword(loginForm.email,loginForm.password)
-       router.push('/dashboard')
+    //    router.push('/dashboard')
     }
 
     // When user types the an input, update the state

@@ -1,7 +1,7 @@
 import { Input, Button, Flex,Text } from '@chakra-ui/react';
 import React ,{useState} from 'react';
 import {useSetRecoilState} from 'recoil'
-import { authModalState } from '@/src/atom/authAtom';
+import { authModalState } from '@/src/atom/authModalAtom';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth'
 import {auth} from '../../../firebase/clientApp'
 import {FIREBASE_ERRORS} from '../../../firebase/errors'
@@ -39,7 +39,7 @@ const Register:React.FC = () => {
             return
         }
         createUserWithEmailAndPassword(registerForm.email,registerForm.password)
-        router.push('/dashboard')
+        // router.push('/dashboard')
     }
 
     // When user types the an input, update the state
