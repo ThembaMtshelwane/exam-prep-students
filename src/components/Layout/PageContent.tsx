@@ -17,7 +17,7 @@ const PageContent:React.FC<Props> = ({children}) => {
             <Flex 
             direction='column'  
             width='95%'
-            height='85vh'
+            height='100%'
             alignContent='center'
             maxWidth='860px'
             border='2px solid #265e9e' 

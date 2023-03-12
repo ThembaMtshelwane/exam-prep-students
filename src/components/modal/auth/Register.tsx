@@ -39,7 +39,9 @@ const Register:React.FC = () => {
             return
         }
         createUserWithEmailAndPassword(registerForm.email,registerForm.password)
-        router.push('/dashboard')
+        if(user){
+            router.push('/dashboard')
+           }
     }
 
     // When user types the an input, update the state

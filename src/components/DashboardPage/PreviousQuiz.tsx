@@ -1,8 +1,9 @@
 import { Box, Flex, Stack,Text } from '@chakra-ui/react';
+import { Timestamp } from 'firebase/firestore';
 import React from 'react';
 
 type PreviousQuizProps = {
-    
+   // Get topic snippets => topic name, date created, isComplete
 };
 
 const PreviousQuiz:React.FC<PreviousQuizProps> = () => {

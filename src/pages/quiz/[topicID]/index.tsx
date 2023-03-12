@@ -1,51 +1,60 @@
+import { QuestionTemplate, Topic } from '@/src/atom/quizAtoms';
 import PageContent from '@/src/components/Layout/PageContent';
+import Questions from '@/src/components/QuizPage/Questions';
+import QuizInfo from '@/src/components/QuizPage/QuizInfo';
 import { firestore } from '@/src/firebase/clientApp';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { GetServerSidePropsContext } from 'next';
 import React from 'react';
 import safeJsonStringify from 'safe-json-stringify'
 
 type QuizPageProps = {
-    
+    // All topic data=> questions, options...
+    topicQuestionData:QuestionTemplate[]
 };
 
-const QuizPage:React.FC<QuizPageProps> = () => {
+const QuizPage:React.FC<QuizPageProps> = ({topicQuestionData}) => {
+    // console.log('passed in');
+    // console.log(topicQuestionData);
     
     return (
         <>
-            <PageContent>
-            {/* Quiz Info 
-            Questions */}
-            {/* <AddQuestion topicID={topicData.id}/>   */}
+          <PageContent>
+              <QuizInfo/>
+              <Questions questions={topicQuestionData}/>
             </PageContent>   
         </>
     )
 }
-export default QuizPage;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-    
-    // Get topic data and pass it to the client
+    // let questionsFromDB: QuestionTemplate[] =[]
+    // Get topic data from database and pass it to the client
     try {
-        const topicDocRef = doc(
-            firestore,
-            'topics',
-            context.query.topicID as string
-            )
-    const topicDoc = await getDoc(topicDocRef)
+        const testRef =  '/modules/ELEN1234/questions'
+        const topicQuestionsCollectionRef = `topics/${context.query.topicID as string}/questions`// get the approprate collection based on the router input
+       // const questionsFromDB = await getDocs(collection(firestore,topicQuestionsCollectionRef)) // get questions collection from database
+        const questionsFromDB = await getDocs(collection(firestore,testRef)) // get questions collection from database
+        let questions:any[] =[]
 
-    return {
-        props:{
-            topicData: topicDoc.exists() 
-            ? JSON.parse(safeJsonStringify({
-                id: topicDoc.id,
-                ...topicDoc.data()
-            }))
-            :""
+        // store all questions from the database into the questions array
+        questionsFromDB.forEach((doc) => {
+            questions.push({ ...doc.data()})
+        });
+
+        return { //This will make sure the questions are available gloabally
+            props:{
+                topicQuestionData:questions.length!==0
+                ? JSON.parse(safeJsonStringify(
+                    questions
+                ))
+                :""
+            }
         }
-    }
 
     } catch (error) {
         console.log('getServerSideProps error',error)   
 }
 }
+
+export default QuizPage;
