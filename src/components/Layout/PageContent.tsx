@@ -11,7 +11,6 @@ const PageContent:React.FC<Props> = ({children}) => {
         <>
         {/* Outter most layer = The grey background */}
         <Flex justifyContent='center' p='16px 0px'
-        border='1px solid #265e9e'
          >
             {/* The main layer = The white foreground */}
             <Flex 
