@@ -68,7 +68,7 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = (
             m ={2} p={5}>
                 <Text> Current Quiz</Text>
                  <Flex direction='row' border='2px solid #265e9e' p={2} m={2} >
-                 <Stack spacing={2}>
+                 <Stack spacing={2}> 
                   <Text onClick={goToQuiz} cursor='pointer' fontWeight={700}>Fractions</Text>
                {/*       { 
                         Array(+AllTopicsSnippets.topicSnippet.length)
