@@ -10,7 +10,7 @@ const PreviousQuiz:React.FC<PreviousQuizProps> = () => {
     
     return (
         <>
-            <Box border='2px solid blue' 
+            <Box border='2px solid #265e9e' 
              m ={2} p={5}
              >  
                 <Text> Previous Quiz</Text>

@@ -28,7 +28,9 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = (
     const [loading, setLoading] = useState(false)
     const [selectedTopic, setSelectedTopic] = useState('sum')
     
-  
+    const goToQuiz =() =>{
+      router.push(`quiz/fractions`)
+    }
     const attemptRecord = async (selectedTopic:string) =>{
     // Add this quiz (selectedTopic) to student history as an attempted quiz
         setLoading(true)
@@ -58,16 +60,17 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = (
     }
     return (
         <>
-            {/* <Box border='2px solid black'>
+           <Box>
                 <Heading p={5} m={0}> Welcome {user?.email},</Heading>
             </Box><br />
             <Box 
-            border='2px solid red' 
+            border='2px solid #265e9e' 
             m ={2} p={5}>
                 <Text> Current Quiz</Text>
-                 <Flex direction='row' border='2px solid red' p={2} m={2} >
+                 <Flex direction='row' border='2px solid #265e9e' p={2} m={2} >
                  <Stack spacing={2}>
-                    { 
+                  <Text onClick={goToQuiz} cursor='pointer' fontWeight={700}>Fractions</Text>
+               {/*       { 
                         Array(+AllTopicsSnippets.topicSnippet.length)
                           .fill("")
                           .map((n, i) => {
@@ -97,10 +100,10 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = (
                                 )
                             })
                     }
-
+              */}
                 </Stack>
                 </Flex>
-            </Box> */}
+            </Box>
         </>
     )
 }

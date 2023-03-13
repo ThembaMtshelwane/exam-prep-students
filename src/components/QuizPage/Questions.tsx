@@ -1,18 +1,14 @@
 import { QuestionTemplate } from '@/src/atom/quizAtoms';
-import { firestore } from '@/src/firebase/clientApp';
 import { Box, Button, Flex,Text, Stack } from '@chakra-ui/react';
-import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 
 type QuestionsProps = {
     questions:QuestionTemplate[]
 };
 
-let questionCounter =0
 const Questions:React.FC<QuestionsProps> = ({questions}) => {
-
-    const [questionText, setQuestionText] = useState('')
-
+    let isStart = false
+    const [questionText, setQuestionText] = useState(isStart ? '' : '')
     const [option1, setOptionText1] = useState('')  
     const [option2, setOptionText2] = useState('')  
     const [option3, setOptionText3] = useState('')  
@@ -27,7 +23,6 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     let MAX_QUESTIONS =1
     let endQuiz = false
     let newQuestions:any[] =[]
-    let quizResult = [{}]
     let score =0
     let incorrectCollection: any[] =[]
     let FIRST_LAYER = 0
@@ -37,6 +32,15 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     let levelCounter =1
     let mainQs:any[] = []; let secQs:any[] = []; let terQs:any[] = [];
     let availableQuestionsADV :any[] = [];
+    let isAnswered = false
+    let quizResult:any[] = [];
+    let finalResult:{}= {};
+    let questionTextsss:string='lols'
+
+    let opt1:string=''
+    let opt2:string=''
+    let opt3:string=''
+    let opt4:string=''
 
   //Process the questions => Arrange according to levels
     function sortData(){
@@ -68,38 +72,47 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
         // get the previous questions that are answered incorrectly
         // = previousQuestionCollection
       
+        console.log('ADV currentLevel',currentLevel)
         // Get the current questions based on current level
         //      eg get available questions at level 2 (level+1=2)
         currQuestions = getLevelQuestions(currentLevel,allQuestions)
-       
+        console.log('ADV following questions')
+        console.log(currQuestions)
+               
         // get the previous questions that are answered incorrectly
         availableQuestionsADV =  previousQuestionCollection.filter(function(prevQuestion:any) {
-        // get the id of previous question 
-        //       eg prevQ.id =1
-        // strip all the ids (remove .) 
-        const prevID = prevQuestion.id.replace('.', '')
-          
-        // compare level 1 ids and level2 ids at level 1 ref
-        //      eg if the whole  of level 1 matches with level 2 id from 0 to level2
-        //      return those questions to new questions variable
-        newQuestions =  currQuestions.filter(function(currQuestion) {
-        
-        // get the id of current question 
-        //       eg prevQ.id =1.1 and 1.2
-        // strip all the ids (remove .) = 11 or 12
-        const currID = currQuestion.id.replace('.', '')
-        
-        // edit the current id in order to perform comparison
-        const editedCurrID = currID.substring(0,currentLevel)
-        // if the ids match the questions are related and return the appropriate current question
-          return prevID  === editedCurrID
-        })
-     
-        // store each result of comparison 
-        storeQs.push(newQuestions)
-        storeQs = storeQs.flat()
+            // get the id of previous question 
+            //       eg prevQ.id =1
+            // strip all the ids (remove .) 
+            const prevID = prevQuestion.id.replace('.', '')
+            console.log('prevID',prevID)
+            
+            // compare level 1 ids and level2 ids at level 1 ref
+            //      eg if the whole  of level 1 matches with level 2 id from 0 to level2
+            //      return those questions to new questions variable
+            newQuestions =  currQuestions.filter(function(currQuestion) {
+                // get the id of current question 
+                //       eg prevQ.id =1.1 and 1.2
+                // strip all the ids (remove .) = 11 or 12
+                const currID = currQuestion.id.replace('.', '')
+                console.log('currID',currID)
+                
+                // edit the current id in order to perform comparison
+                const editedCurrID = currID.substring(0,currentLevel-1)
+                console.log('editedCurrID',editedCurrID)
+                console.log('prevID  === editedCurrID',prevID  === editedCurrID)
+                // if the ids match the questions are related and return the appropriate current question
+                return prevID  === editedCurrID
+            })
+            console.log('new questions')
+            console.log(newQuestions)
+                 
+            // store each result of comparison 
+            storeQs.push(newQuestions)
+            storeQs = storeQs.flat()
+            console.log('storeQs')
+            console.log(storeQs)
         })  
-        //console.log('availableQuestionsADV',availableQuestionsADV)
       
         // if update the questions need for next level
         if(storeQs.length === 0){
@@ -111,74 +124,83 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
             availableQuestionsADV = storeQs.filter(function(newQuestion) {
                 return Object.keys(newQuestion).length !== 0;
             })
-        }
-      
+        }      
         // empty storage
         storeQs=[]
         newQuestions =[]
+        console.log('availableQuestionsADV')
+        console.log(availableQuestionsADV)
       
         // return questions for next level
         return availableQuestionsADV
     }
-
+ 
     // // Display the next questions
     function nextQuestion (levelIndex:any, prevInfo:any,allQuestions:any) {
         const index = prevInfo.indexOf('empty');
         if (index > -1) { // only splice array when item is found
           prevInfo.splice(index, 1); // 2nd parameter means remove one item only
         }
+        console.log('all wrongs')
+        console.log(prevInfo)
+
         console.log('prevInfo.length',prevInfo.length)
-        if(prevInfo.length===0 && levelIndex===1){ 
+        if(/*prevInfo.length===0 &&*/ levelIndex===1){ 
           questionsCounter++
+          console.log('----NXT-Q questions counter at level 1',questionsCounter)
           availableQuestions = getLevelQuestions(levelIndex,allQuestions)
-          console.log('level 1 question counter',questionsCounter)
-          console.log('level 1 availableQuestions',availableQuestions)
           MAX_QUESTIONS = availableQuestions.length
-          console.log('level 1 MAX_QUESTIONS',MAX_QUESTIONS)
           currentQestion = availableQuestions[questionsCounter - 1]
-          console.log('level 1 question',availableQuestions[questionsCounter-1].question)
-         // setQuestionText(availableQuestions[questionsCounter-1].question)
+          //setQuestionText(availableQuestions[questionsCounter-1].question)
+          questionTextsss =availableQuestions[questionsCounter-1].question
+          console.log('questionTextsss',questionTextsss)
         }
         else{
          submitQuiz(endQuiz)
          
          questionsCounter++
-         //availableQuestions = getLevelQuestionsAdvanced(prevInfo,levelIndex,allQuestions) as []; 
-         availableQuestions = getLevelQuestions(levelIndex,allQuestions)
-         console.log('level 2 question counter',questionsCounter)
-         console.log('level 2 availableQuestions',availableQuestions)
+         console.log('NXT-Q Counter at level 2 and above',questionsCounter)
+
+         availableQuestions = getLevelQuestionsAdvanced(prevInfo,levelIndex,allQuestions) as []; 
+         console.log('NXT-Q availableQuestions at level 2 and above')
+         console.log(availableQuestions)
+
          MAX_QUESTIONS = availableQuestions.length
-         console.log('level 2 MAX_QUESTIONS',MAX_QUESTIONS)
+         console.log('NXT-Q MAX_QUESTIONS at level 2 and above',MAX_QUESTIONS)
+
          currentQestion = availableQuestions[questionsCounter - 1]
-         console.log('level 2 question',availableQuestions[questionsCounter-1].question)
          //setQuestionText(availableQuestions[questionsCounter-1].question)
+         questionTextsss =availableQuestions[questionsCounter-1].question
+         console.log('questionTextsss',questionTextsss)
         }
 
         // Display all the choices/options for the current question
-        // setOptionText1(availableQuestions[questionsCounter-1].choice1)
-        // setOptionText2(availableQuestions[questionsCounter-1].choice2)
-        // setOptionText3(availableQuestions[questionsCounter-1].choice3)
-        // setOptionText4(availableQuestions[questionsCounter-1].choice4)
-
-       // acceptAnswers = true
+            // setOptionText1(availableQuestions[questionsCounter-1].choice1)
+            // setOptionText2(availableQuestions[questionsCounter-1].choice2)
+            // setOptionText3(availableQuestions[questionsCounter-1].choice3)
+            // setOptionText4(availableQuestions[questionsCounter-1].choice4)
+           opt1= availableQuestions[questionsCounter-1].choice1
+           opt2= availableQuestions[questionsCounter-1].choice2
+           opt3= availableQuestions[questionsCounter-1].choice3
+           opt4= availableQuestions[questionsCounter-1].choice4
     }
     
     // //End quiz 
     function submitQuiz(endQuiz:boolean){
         if(endQuiz){
-            // finalResult = {
-            //     result :quizResult,
-            //     finalScore: score
-            // }
+            finalResult = {
+                result :quizResult,
+                finalScore: score
+            }
          return
         }
     }
 
-    // // Evaluate choices
+    // Evaluate choices
     const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>): void=>{
         incorrectCollection=[]
+        isAnswered = true
         const selectedAnswer = event.currentTarget.innerText
-        console.log('check answer question counter',questionsCounter)
         const correct = availableQuestions[questionsCounter-1].answer
 
         if (selectedAnswer === correct) { // correct answer
@@ -193,28 +215,41 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
           console.log('incorrect answer')
           incorrectCollection.push(currentQestion)
         }
-        // quizResult.push({
-        //   question:currentQestion.questionText,
-        //   isCorrect: currentQestion.status       
-        // })
+        quizResult.push({
+          question:currentQestion.questionText,
+          isCorrect: currentQestion.status       
+        })
     }
 
     // Submit final answer
     function submitAnswer(){
-        let level = updateLevel(allQuestions)
-        console.log('submit level count',level)
-        FIRST_LAYER =1
-        storeAllPrevIncorrects.push( getInorrect())
-        console.log('submit storeAllPrevIncorrects')
-        console.log(storeAllPrevIncorrects)
-        if(storeAllPrevIncorrects[0] ==='empty' && ((level as number)-1) === FIRST_LAYER ){return}
-        nextQuestion(level, storeAllPrevIncorrects,allQuestions) // Load new questions
-    }
+        if(isAnswered){
+            // setCounter(counter + 1)
+            console.log('BEFORE sub level ',levelCounter)
+            console.log('BEFORE sub max questions ',MAX_QUESTIONS)
+            let level = updateLevel(allQuestions)
+            console.log('AFTER sub level ',levelCounter)
+            console.log('AFTER sub max questions ',MAX_QUESTIONS)
+
+            FIRST_LAYER =1
+            storeAllPrevIncorrects.push( getInorrect())
+            
+            console.log('current level')
+            console.log(level)
+
+            console.log('storeAllPrevIncorrects')
+            console.log(storeAllPrevIncorrects)
+
+            if(storeAllPrevIncorrects[0] ==='empty' && ((level as number)-1) === FIRST_LAYER ){return}
+            nextQuestion(level, storeAllPrevIncorrects,allQuestions) // Load new questions
+        }  
+}
 
     // // Move to next level
     function updateLevel (allQuestions:any) {
-        console.log('update level questionsCounter',questionsCounter)
-        console.log('update level  MAX_QUESTIONS',MAX_QUESTIONS)
+        
+        console.log('updateLevel ',questionsCounter)
+
         LAST_LAYER = allQuestions.length
         if (levelCounter> LAST_LAYER) { // if all questions OF THE QUIZ are answered,....
           // end quiz
@@ -230,33 +265,31 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     
     // // Get the previous question
     function getInorrect () {
-        console.log('getIncorrect')
-        console.log(incorrectCollection[incorrectCollection.length-1])
     return incorrectCollection[incorrectCollection.length-1]
     }
 
     useEffect(()=>{
-        setAll()
+       setAll(questionsCounter)
 	}, [])
 
-    const setAll = ()=>{
-        console.log('xxxx xxxx question counter use effect',questionsCounter)
+    const setAll = (questionsCounter:number)=>{
+        console.log('xxxxxx setAll counter ',questionsCounter)
 		setQuestionText(availableQuestions[questionsCounter-1].question)
         setOptionText1(availableQuestions[questionsCounter-1].choice1)
         setOptionText2(availableQuestions[questionsCounter-1].choice2)
         setOptionText3(availableQuestions[questionsCounter-1].choice3)
         setOptionText4(availableQuestions[questionsCounter-1].choice4)
     }
-    
-    startQuiz() 
 
+    startQuiz()
+    
     return (
         <>    
         <Box  border='2px solid black' m ={2} p={5}>
 
             <Text fontWeight={700}>Question {questionsCounter} of {MAX_QUESTIONS}</Text>
 
-            <Text>{questionText}</Text>
+            <Text>{questionTextsss}</Text>
 
             <Flex direction=  'column' p={2} m={2} > 
                 <Stack spacing={2} align='center'>
@@ -265,11 +298,12 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
                     <Button bg='white' color='black' border='2px solid #265e9e' width='100%' onClick={checkAnswer}>{option3}</Button>
                     <Button bg='white' color='black' border='2px solid #265e9e' width='100%' onClick={checkAnswer}>{option4}</Button>
                 </Stack> <br />
-                <Button bg='#265e9e' color='white' onClick={submitAnswer}>Next</Button><br />
-                {/* <Button bg='#265e9e' color='white'>Done</Button> */}
+                <Button bg='#265e9e' color='white' onClick={submitAnswer}>
+                {endQuiz ?'DONE' :'NEXT' }
+                </Button><br />
             </Flex>
         </Box>
         </>
-        )
+    )
 }
 export default Questions;
