@@ -285,7 +285,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     
     return (
         <>    
-        <Box  border='2px solid black' m ={2} p={5}>
+        <Box  border='2px solid #265e9e' borderRadius={5} m ={2} p={5}>
 
             <Text fontWeight={700}>Question {questionsCounter} of {MAX_QUESTIONS}</Text>
 

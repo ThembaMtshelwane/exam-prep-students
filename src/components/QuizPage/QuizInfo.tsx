@@ -38,9 +38,9 @@ const QuizInfo:React.FC<QuizInfoProps> = () => {
         
         // </>
          <>  
-        <Box  border='2px solid red' m ={2} p={5}>
-            <Heading>Quiz Name</Heading>
-            <Flex direction='row' border='2px solid red' p={2} m={2} >  
+        <Box  m ={2} p={5}>
+            <Heading>Fractions Quiz</Heading>
+            <Flex direction='row' border='2px solid #265e9e' borderRadius={5} p={2} m={2} >  
                 list of learning concepts
             </Flex>
         </Box>

@@ -22,7 +22,7 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = (
 {
 
 }) => {
-  
+
     const router = useRouter()
     const [user] = useAuthState(auth)
     const [error, setError] = useState('')
