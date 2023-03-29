@@ -14,7 +14,7 @@ type QuizPageProps = {
 };
 
 const QuizPage:React.FC<QuizPageProps> = ({topicQuestionData}) => {
-    // console.log('passed in');
+    //  console.log('passed in');
     // console.log(topicQuestionData);
     
     return (
