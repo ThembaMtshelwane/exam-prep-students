@@ -1,7 +1,6 @@
 import { QuestionTemplate } from '@/src/atom/quizAtoms';
-import { Flex, Stack, Button, Text, Box } from '@chakra-ui/react';
 
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import QuestionCard from './QuestionCard';
 
 
