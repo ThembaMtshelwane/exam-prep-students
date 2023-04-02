@@ -1,123 +1,14 @@
 import { QuestionTemplate } from '@/src/atom/quizAtoms';
-import { Flex, Button, Text, Box, Stack } from '@chakra-ui/react';
 import React, {useState } from 'react';
 import QuestionCard from './QuestionCard';
 
-
 type QuestionsProps = {
+  // Here are the questions from the database
     questions:QuestionTemplate[]
 };
 
 const Questions:React.FC<QuestionsProps> = ({questions}) => {
-  console.log('Run once');
-  // const questionssss = [
-  //   {
-  //       question:'LO1 to LO8',
-  //       questionAnswer:'Option A-1',
-  //       questionID:'1',
-  //       questionLevel:1,
-  //       questionOptions:['Option A-1','Option B-1','Option C-1','Option D-1'],
-  //   },
-  //   {
-  //       question:'LO1 to LO4',
-  //       questionAnswer:'Option A-1-1',
-  //       questionID:'1.1',
-  //       questionLevel:2,
-  //       questionOptions:['Option A-1-1','Option B-1-1','Option C-1','Option D-1-1'],
-  //   },
-  //   {
-  //       question:'LO5 to LO8',
-  //       questionAnswer:'Option A-1-2',
-  //       questionID:'1.2',
-  //       questionLevel:2,
-  //       questionOptions:['Option A-1-2','Option B-1-2','Option C-1-2','Option D-1-2'],
-  //   },
-  //   {
-  //       question:'LO1 to LO2',
-  //       questionAnswer:'Option A-1-1-1',
-  //       questionID:'1.1.1',
-  //       questionLevel:3,
-  //       questionOptions:['Option A-1-1-1','Option B-1-1','Option C-1-1','Option D-1-1'],
-  //   },
-  //   {
-  //       question:'LO3 to LO4',
-  //       questionAnswer:'Option A-1-1-2',
-  //       questionID:'1.1.2',
-  //       questionLevel:3,
-  //       questionOptions:['Option A-1-1-2','Option B-1','Option C-1','Option D-1'],
-  //   },
-  //   {
-  //       question:'LO5 to LO6',
-  //       questionAnswer:'Option A-1-2-1',
-  //       questionID:'1.2.1',
-  //       questionLevel:3,
-  //       questionOptions:['Option A-1-2-1','Option B-1','Option C-1','Option D-1'],
-  //   },
-  //   {
-  //       question:'LO7 to LO8',
-  //       questionAnswer:'Option A-1-2-2',
-  //       questionID:'1.2.2',
-  //       questionLevel:3,
-  //       questionOptions:['Option A-1-2-2','Option B-1','Option C-1','Option D-1'],
-  //   },
-  //   {
-  //       question:'LO1',
-  //       questionAnswer:'Option A-1-1-1-1',
-  //       questionID:'1.1.1.1',
-  //       questionLevel:4,
-  //       questionOptions:['Option A-1-1-1-1','Option B-1','Option C-1','Option D-1'],
-  //   },
-  //   {
-  //       question:'LO2',
-  //       questionAnswer:'Option A-1-1-1-2',
-  //       questionID:'1.1.1.2',
-  //       questionLevel:4,
-  //       questionOptions:['Option A-1-1-1-2','Option B-1','Option C-1','Option D-1'],
-  //   } ,
-  //   {
-  //       question:'LO3',
-  //       questionAnswer:'Option A-1-1-2-1',
-  //       questionID:'1.1.2.1',
-  //       questionLevel:4,
-  //       questionOptions:['Option A-1-1-2-1','Option B-1','Option C-1','Option D-1'],
-  //   } ,
-  //   {
-  //       question:'LO4',
-  //       questionAnswer:'Option A-1-1-2-2',
-  //       questionID:'1.1.2.2',
-  //       questionLevel:4,
-  //       questionOptions:['Option A-1-1-2-2','Option B-1','Option C-1','Option D-1'],
-  //   } ,
-  //   {
-  //       question:'LO5',
-  //       questionAnswer:'Option A-1-2-1-1',
-  //       questionID:'1.2.1.1',
-  //       questionLevel:4,
-  //       questionOptions:['Option A-1-2-1-1','Option B-1','Option C-1','Option D-1'],
-  //   } ,
-  //   {
-  //       question:'LO6',
-  //       questionAnswer:'Option A-1-2-1-2',
-  //       questionID:'1.2.1.2',
-  //       questionLevel:4,
-  //       questionOptions:['Option A-1-2-1-2','Option B-1','Option C-1','Option D-1'],
-  //   } ,
-  //   {
-  //       question:'LO7',
-  //       questionAnswer:'Option A-1-2-2-1',
-  //       questionID:'1.2.2.1',
-  //       questionLevel:4,
-  //       questionOptions:['Option A-1-2-2-1','Option B-1','Option C-1','Option D-1'],
-  //   }
-  //    ,
-  //   {
-  //       question:'LO8',
-  //       questionAnswer:'Option A-1-2-2-2',
-  //       questionID:'1.2.2.2',
-  //       questionLevel:4,
-  //       questionOptions:['Option A-1-2-2-2','Option B-1','Option C-1','Option D-1'],
-  //   }   
-  // ]
+
   // Used to set the state for all available questions 
   const [allQuestions, setAllQuestions] = useState<Array<Array<any>>>([[]]);
 

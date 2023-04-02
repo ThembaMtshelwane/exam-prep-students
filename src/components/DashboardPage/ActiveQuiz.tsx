@@ -1,3 +1,4 @@
+import { Topic } from '@/src/atom/quizAtoms';
 import { auth, firestore } from '@/src/firebase/clientApp';
 import { Box, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { doc, runTransaction, serverTimestamp } from 'firebase/firestore';
@@ -16,12 +17,13 @@ type ActiveQuizProps = {
     Add the quiz name, if its completed, when was the attempt, and the results
       
 */
+  topicInfo:Topic[]
 };
 
-const ActiveQuiz:React.FC<ActiveQuizProps> = (
-{
-
-}) => {
+const ActiveQuiz:React.FC<ActiveQuizProps> = ({topicInfo}) => {
+    
+    console.log('passed in');
+    console.log(topicInfo);
 
     const router = useRouter()
     const [user] = useAuthState(auth)
