@@ -85,8 +85,12 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
      </Box>
      }
        {/* END OF QUIZ*/}
-    {
-      endQuiz &&<Text fontWeight={700}>END </Text>
+    { endQuiz &&
+        <Box  border='2px solid #265e9e' borderRadius={5} m ={2} p={5}>
+          <Flex direction=  'column' p={2} m={2} > 
+              <Text fontWeight={700}>END OF QUIZ </Text>
+          </Flex>  
+        </Box>
     }
     </>
    )
