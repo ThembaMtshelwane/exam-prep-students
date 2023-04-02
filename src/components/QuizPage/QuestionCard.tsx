@@ -1,4 +1,5 @@
 import { Flex, Button, Text, Box, Stack } from '@chakra-ui/react';
+import {useRouter} from 'next/router'
 
 import React  from 'react';
 type QuestionCardProps = {
@@ -28,9 +29,11 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
 }) => {
 
    console.log('currentLevelQuestions',currentLevelQuestions)
+   const router = useRouter()
 
   return (
     <>   
+    {/* { endQuiz  &&  router.push('/results')  } */}
     {!isStart && <> 
       <Box  border='2px solid #265e9e' borderRadius={5} m ={2} p={5}>
         <Flex direction=  'column' p={2} m={2} > 

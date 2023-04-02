@@ -1,6 +1,7 @@
 import { QuestionTemplate } from '@/src/atom/quizAtoms';
 import React, {useState } from 'react';
 import Results from '../Results/Results';
+
 import QuestionCard from './QuestionCard';
 
 type QuestionsProps = {
