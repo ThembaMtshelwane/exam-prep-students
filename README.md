@@ -58,6 +58,10 @@ Pay great attention to the id of each question. ![alt text](./documentation/imag
  ![alt text](./documentation/images/exam-prep-student-flowchart.PNG)
 
 ## Improvements needed
-Instead of manually adding the ids -since they can get complicated- in the companion website (https://exam-prep-lt9sf92rb-thembamtshelwane.vercel.app) the ids should be implicitly linked to the questions insted of explicitly
+- Instead of manually adding the ids -since they can get complicated- in the companion website (https://exam-prep-lt9sf92rb-thembamtshelwane.vercel.app) the ids should be implicitly linked to the questions insted of explicitly.
+- The student's results should be stored in the database.
+
 For the extra features
-  - In the dashboard there should be a list of available quizes instead of a hard coded fractions quiz
+- In the dashboard there should be a list of available quizes instead of a hard coded fractions quiz. 
+- Upon selecting the specific quiz from the list, route to that quiz and its data.
+
