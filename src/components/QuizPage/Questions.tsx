@@ -1,5 +1,6 @@
 import { QuestionTemplate } from '@/src/atom/quizAtoms';
 import React, {useState } from 'react';
+import Results from '../Results/Results';
 import QuestionCard from './QuestionCard';
 
 type QuestionsProps = {
@@ -26,7 +27,9 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
 
   // Used to get the previous question information ( question id) and stores it
   const [previousQuestionsID, setPreviousQuestionsID] = useState<string[]>([]);
+  const [data, setData] = useState<any[]>([{}]);
   const [incorrectCollection, setIncorrectCollection] = useState<string[]>([]);
+  const [studentResultsData, setStudentResultsData] = useState<any[]>([{}]);
   
   // Used as a colletion of the following questions
   const [currentLevelQuestions, setCurrentLevelQuestions] = useState<Array<any>>([]);
@@ -112,6 +115,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
       setQuestionNumber(questionNumber+1)
       // set the previous question id
       setPreviousQuestionsID(current => [ ...current,getIncorrect()])
+      setData(current => [ ...current,studentResults()])
 
       // If the question number is equal to the available questions therefore all questions are answered
         // if the current level questions(questions to be displayed) are NOT available (which is likely at the beginning) 
@@ -181,18 +185,20 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
   }
 
  // Evaluate choices
-  function checkAnswer(event: React.MouseEvent<HTMLButtonElement> , qid:string, answer:string){
+  function checkAnswer(event: React.MouseEvent<HTMLButtonElement> , qid:string, answer:string, q:string){
     setIsAnswered(true)
     const selectedAnswer = event.currentTarget.innerText
     if (selectedAnswer === answer) { // correct answer
       console.log('correct answer')
       // If the question is ANSWERED CORRECTLY add empty instead of the question id
       setIncorrectCollection(current =>[...current,'empty'])
+      setStudentResultsData(current =>[...current,{question:q,result:'correct'}])
     } 
     else{ // incorrect answer
       console.log('incorrect answer')
       // If the question is NOT ANSWERED CORRECTLY add the question id
       setIncorrectCollection(current =>[...current,qid])
+      setStudentResultsData(current =>[...current,{question:q,result:'wrong'}])
     }
   }
 
@@ -201,9 +207,12 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     return incorrectCollection[incorrectCollection.length-1]
   }
 
+  const studentResults = () =>{
+    return studentResultsData[studentResultsData.length-1]
+  }
+
   return (
-   <>  
-   {/* <Text >option 1 {options[0]}</Text>  */}
+   <> 
       <QuestionCard 
           startQuiz = {startQuiz} 
           allQuestions = {allQuestions}
@@ -218,9 +227,10 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
           qid ={qid}
           answer ={answer}
           isStart={isStart}
-          endQuiz ={endQuiz}
           isDisplaySecondAndBeyond={isDisplaySecondAndBeyond}
+          endQuiz={endQuiz}
       />   
+      <Results endQuiz ={endQuiz} data={data}/>
    </>
   )
 }

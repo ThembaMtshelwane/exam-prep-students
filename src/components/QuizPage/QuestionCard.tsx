@@ -14,16 +14,16 @@ type QuestionCardProps = {
   isDisplayFirst:boolean
   qid: string
   answer: string  
-  endQuiz:boolean
   isStart:boolean
   isDisplaySecondAndBeyond:boolean
+  endQuiz:boolean
 };
 const QuestionCard: React.FC <QuestionCardProps>  = ({
   startQuiz, allQuestions,questionText, options,
   questionNumber, levelNumber,
   checkAnswer,nextQuestions,currentLevelQuestions
-  ,isDisplayFirst,qid,answer,endQuiz,isStart,
-  isDisplaySecondAndBeyond
+  ,isDisplayFirst,qid,answer,isStart,
+  isDisplaySecondAndBeyond,endQuiz
 
 }) => {
 
@@ -50,7 +50,7 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
              {
               options.map((option:string,index:number) => (
                 <Button bg='white' color='black' border='2px solid #265e9e' width='100%' key={index} 
-                 onClick={(e) => {checkAnswer(e,qid,answer) }}>
+                 onClick={(e) => {checkAnswer(e,qid,answer,questionText) }}>
                   {option } 
                  </Button>
               ))
@@ -72,7 +72,7 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
               {
                 currentLevelQuestions[questionNumber-1].questionOptions.map((option:string,index:number) => (
                   <Button bg='white' color='black' border='2px solid #265e9e' width='100%'key={index} 
-                  onClick={(e) => {checkAnswer(e,currentLevelQuestions[questionNumber-1].id, currentLevelQuestions[questionNumber-1].answer) }}>
+                  onClick={(e) => {checkAnswer(e,currentLevelQuestions[questionNumber-1].id, currentLevelQuestions[questionNumber-1].answer,currentLevelQuestions[questionNumber-1].question) }}>
                     {option}
                   </Button>
                 ))
@@ -84,14 +84,6 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
         </Flex>  
      </Box>
      }
-       {/* END OF QUIZ*/}
-    { endQuiz &&
-        <Box  border='2px solid #265e9e' borderRadius={5} m ={2} p={5}>
-          <Flex direction=  'column' p={2} m={2} > 
-              <Text fontWeight={700}>END OF QUIZ </Text>
-          </Flex>  
-        </Box>
-    }
     </>
    )
 }
