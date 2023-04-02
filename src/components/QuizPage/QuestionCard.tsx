@@ -28,6 +28,7 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
 }) => {
 
    console.log('currentLevelQuestions',currentLevelQuestions)
+
   return (
     <>   
     {!isStart && <> 
@@ -46,13 +47,14 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
          
          <Flex direction=  'column' p={2} m={2} > 
              <Stack spacing={2} align='center'>
-               {
-                 options.map((option,index) => (
-                   <Button bg='white' color='black' border='2px solid #265e9e' width='100%'key={index} onClick={(e) => {checkAnswer(e,qid,answer) }}>
-                     {option}
-                   </Button>
-                 ))
-               }
+             {
+              options.map((option:string,index:number) => (
+                <Button bg='white' color='black' border='2px solid #265e9e' width='100%' key={index} 
+                 onClick={(e) => {checkAnswer(e,qid,answer) }}>
+                  {option } 
+                 </Button>
+              ))
+            }
              </Stack> <br/> 
              
              {isStart && <>  <Button bg='#265e9e' color='white' onClick={nextQuestions}> Next </Button><br/> </> } 
@@ -70,7 +72,7 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
               {
                 currentLevelQuestions[questionNumber-1].questionOptions.map((option:string,index:number) => (
                   <Button bg='white' color='black' border='2px solid #265e9e' width='100%'key={index} 
-                  onClick={(e) => {checkAnswer(e,currentLevelQuestions[questionNumber-1].questionID, currentLevelQuestions[questionNumber-1].questionAnswer) }}>
+                  onClick={(e) => {checkAnswer(e,currentLevelQuestions[questionNumber-1].id, currentLevelQuestions[questionNumber-1].answer) }}>
                     {option}
                   </Button>
                 ))

@@ -71,7 +71,7 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = (
                  <Flex direction='row' border='2px solid #265e9e' p={2} m={2} >
                  <Stack spacing={2}> 
                   <Text onClick={goToQuiz} cursor='pointer' fontWeight={700}>Fractions</Text>
-               {/*       { 
+                     {/* { 
                         Array(+AllTopicsSnippets.topicSnippet.length)
                           .fill("")
                           .map((n, i) => {
@@ -100,8 +100,8 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = (
                                   </>
                                 )
                             })
-                    }
-              */}
+                    } */}
+             
                 </Stack>
                 </Flex>
             </Box>

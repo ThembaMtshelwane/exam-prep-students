@@ -1,5 +1,5 @@
 import { QuestionTemplate } from '@/src/atom/quizAtoms';
-
+import { Flex, Button, Text, Box, Stack } from '@chakra-ui/react';
 import React, {useState } from 'react';
 import QuestionCard from './QuestionCard';
 
@@ -164,17 +164,17 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     const quadQ: any[] = [];   // Stores level 4 questions
 
     questions.forEach((q: any) => {
-      if (q.questionLevel === 1) {
+      if (q.level === 1) {
         mainQs.push(q);
-      } else if (q.questionLevel === 2) {
+      } else if (q.level === 2) {
         secQs.push(q);
-      } else if (q.questionLevel === 3) {
+      } else if (q.level === 3) {
         terQs.push(q);
-      } else if (q.questionLevel === 4) {
+      } else if (q.level === 4) {
         quadQ.push(q);
       }
     });
-    return [mainQs, secQs, terQs,quadQ];
+    return [mainQs, secQs, terQs/*,quadQ*/];
   }
 
   // Start Quiz
@@ -203,8 +203,8 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
   function setQuestion(dataArray: any[]) {
     setQuestionText(dataArray[questionNumber].question)
     setOptions(dataArray[questionNumber].questionOptions)
-    setAnswer(dataArray[questionNumber].questionAnswer)
-    setQuestionID(dataArray[questionNumber].questionID)
+    setAnswer(dataArray[questionNumber].answer)
+    setQuestionID(dataArray[questionNumber].id)
   }
 
   function nextQuestions() {
@@ -262,7 +262,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
               const updated = canidateQuestions.filter((currentQuestionID:any) =>{
                 //edit the previous ids to make comapring easier
                 // for these ids remove the last character  eg 1.1.1 becomes 11
-                const currEdited = currentQuestionID.questionID.replace(/[.]/g,'').substring(0,levelNumber)
+                const currEdited = currentQuestionID.id.replace(/[.]/g,'').substring(0,levelNumber)
                 console.log('curr id',currEdited)
                 console.log(prevEdited === currEdited)
                 // if the ids match, it means candidate question is valid to be added to the new current level questions
@@ -312,6 +312,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
 
   return (
    <>  
+   {/* <Text >option 1 {options[0]}</Text>  */}
       <QuestionCard 
           startQuiz = {startQuiz} 
           allQuestions = {allQuestions}
