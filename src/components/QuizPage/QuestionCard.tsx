@@ -37,7 +37,7 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
     {!isStart && <> 
       <Box  border='2px solid #265e9e' borderRadius={5} m ={2} p={5}>
         <Flex direction=  'column' p={2} m={2} > 
-          <Button bg='#265e9e' color='white' onClick={startQuiz}> Start </Button><br/>
+          <Button bg='' color='white' onClick={startQuiz}> Start </Button><br/>
         </Flex>  
         </Box>
     </> }
