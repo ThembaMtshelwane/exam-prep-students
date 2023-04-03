@@ -83,6 +83,14 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
               {
                 currentLevelQuestions[questionNumber-1].questionOptions.map((option:string,index:number) => (
                   <Button bg='white' color='black' border='2px solid #265e9e' width='100%'key={index} 
+                  _active={{
+                    transform: 'scale(0.98)',
+                  }}
+                  _focus={{
+                    boxShadow:'0 0 1px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)',
+                    bg:' #618fd9',
+                    color:'white' 
+                  }}
                   onClick={(e) => {checkAnswer(e,currentLevelQuestions[questionNumber-1].id, currentLevelQuestions[questionNumber-1].answer,currentLevelQuestions[questionNumber-1].question) }}>
                     {option}
                   </Button>
