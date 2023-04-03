@@ -19,8 +19,7 @@ export default function Home() {
   return (
     <>
       <Flex bg='#265e9e' height='92vh'>
-        <Flex direction='column' alignSelf='center'
-        width='50%' margin={10}>
+        <Flex direction='column' alignSelf='center'width='50%' margin={10}>
   
             <Heading color='white' mb={2}>
                 WITS EXAM PREP
