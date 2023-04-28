@@ -37,13 +37,13 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
     {!isStart && <> 
       <Box  border='2px solid #265e9e' borderRadius={5} m ={2} p={5}>
         <Flex direction=  'column' p={2} m={2} > 
-          <Button bg='' color='white' onClick={startQuiz}> Start </Button><br/>
+          <Button bg='#265e9e' color='white' onClick={startQuiz}> Start Quiz </Button><br/>
         </Flex>  
         </Box>
     </> }
     
     {/* FOR THE FIRST QUESTION */}
-       {isDisplayFirst && <Box  border='2px solid #265e9e' borderRadius={5} m ={2} p={5}>
+       {isDisplayFirst && <Box  borderRadius={0} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)' m ={2} p={5}>
         
          <Text fontWeight={700}>Question {questionNumber} of {allQuestions[levelNumber-1].length} </Text>
          <Text >{questionText}</Text>  
@@ -73,7 +73,7 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
       </Box>
       }
     {/* FOR THE SECOND QUESTION AND BEYOND */}
-      { (isDisplaySecondAndBeyond && !endQuiz ) && <Box  border='2px solid #265e9e' borderRadius={5} m ={2} p={5}>
+      { (isDisplaySecondAndBeyond && !endQuiz ) && <Box borderRadius={0} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)' m ={2} p={5}>
         
         <Text fontWeight={700}>Question {questionNumber} of {currentLevelQuestions.length} </Text>
         <Text >{currentLevelQuestions[questionNumber-1].question}</Text>  

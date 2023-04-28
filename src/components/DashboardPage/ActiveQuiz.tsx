@@ -60,14 +60,14 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({topicInfo}) => {
     return (
         <>
           <Box onClick={goToQuiz} m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)' >
-            <Box fontSize='16px' fontWeight={700} color='gray.700'>
+            <Box fontSize='16px' fontWeight={700} color='gray.700' p={2}>
               <p> Current Quiz</p>
             </Box>
-            <Flex direction='row' p={2} m={2} >
+            <Flex direction='row' pr={2} m={2} >
                  
             <List width='100%'>
                 <Stack spacing={5}>
-                  <ListItem>
+                  <ListItem> 
                     <Box  cursor='pointer' fontWeight={700} 
                      bg='white' boxShadow='1px 1px 1px 2px rgba(97, 143, 217, .75)'p='10px'
                       _hover={{
