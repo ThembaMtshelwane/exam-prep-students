@@ -1,4 +1,4 @@
-import { Box, Flex, Stack,Text } from '@chakra-ui/react';
+import { Box, Flex, List, Stack,Text,ListItem } from '@chakra-ui/react';
 import { Timestamp } from 'firebase/firestore';
 import React from 'react';
 
@@ -10,11 +10,29 @@ const PreviousQuiz:React.FC<PreviousQuizProps> = () => {
     
     return (
         <>
-            <Box border='2px solid #265e9e' 
-             m ={2} p={5}
-             >  
-                <Text> Previous Quiz</Text>
+            <Box m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .75)' >
+            <Box fontSize='16px' fontWeight={700} color='gray.700'>
+              <p> Previous Quiz</p>
             </Box>
+            <Flex direction='row' p={2} m={2} >
+                 
+             <List width='100%'>
+                <Stack spacing={5}>
+                  <ListItem>
+                    <Box  cursor='pointer' fontWeight={700} 
+                     bg='white' boxShadow='1px 1px 1px 2px rgba(97, 143, 217, .75)'p='10px'
+                      _hover={{
+                        bg:'#265e9e', color:'white',
+                      }}>
+                        <Text >Topic: Fractions</Text>
+                        <Text>Time:</Text>
+                        <Text>Status:</Text>
+                    </Box>
+                  </ListItem>
+                </Stack>
+             </List>
+                </Flex>
+          </Box>
         </>
     )
 }

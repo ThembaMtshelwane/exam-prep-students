@@ -1,6 +1,6 @@
 import { Topic } from '@/src/atom/quizAtoms';
 import { auth, firestore } from '@/src/firebase/clientApp';
-import { Box, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, List, ListItem, Stack, Text, } from '@chakra-ui/react';
 import { doc, runTransaction, serverTimestamp } from 'firebase/firestore';
 import {useRouter} from 'next/router'
 import React, { useState } from 'react';
@@ -15,21 +15,17 @@ type ActiveQuizProps = {
       
     When a student picsk a quiz add it to the student's quiz history.
     Add the quiz name, if its completed, when was the attempt, and the results
-      
+
 */
   topicInfo:Topic[]
 };
 
 const ActiveQuiz:React.FC<ActiveQuizProps> = ({topicInfo}) => {
     
-    console.log('passed in');
-    console.log(topicInfo);
-
     const router = useRouter()
-    const [user] = useAuthState(auth)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const [selectedTopic, setSelectedTopic] = useState('sum')
+    const [user] = useAuthState(auth)
     
     const goToQuiz =() =>{
       router.push(`quiz/fractions`)
@@ -63,50 +59,29 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({topicInfo}) => {
     }
     return (
         <>
-           <Box>
-                <Heading p={5} m={0}> Welcome {user?.email},</Heading>
-            </Box><br />
-            <Box 
-            border='2px solid #265e9e' 
-            m ={2} p={5}>
-                <Text> Current Quiz</Text>
-                 <Flex direction='row' border='2px solid #265e9e' p={2} m={2} >
-                 <Stack spacing={2}> 
-                  <Text onClick={goToQuiz} cursor='pointer' fontWeight={700}>Fractions</Text>
-                     {/* { 
-                        Array(+AllTopicsSnippets.topicSnippet.length)
-                          .fill("")
-                          .map((n, i) => {
-                            {}
-                                return (
-                                  <>
-                                  <div key={i*2} >
-                                    <Flex direction='column' border='2px'p={2} borderColor='#265e9e' borderRadius='10px' >
-                                         <Box>
-                                            <Text
-                                             fontWeight={700}
-                                             cursor='pointer'
-                                             onClick={()=>{
-                                                 setSelectedTopic(String(Alltopics.topicSnippet[i].topicId))
-                                                 console.log('selected topic', selectedTopic)
-                                                 setSelectedTopic(String(Alltopics.topicSnippet[i].topicId))
-                                                 attemptRecord(selectedTopic)
-                                             }}
-                                            >Name:{String(AllTopicsSnippets.topicSnippet[i].topicId)}</Text>
-                                            <Text> Quiz Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat perspiciatis cumque voluptate asperiores </Text>
-                                         </Box>
-                                         <Text fontSize='9pt' color='red'>{ error}</Text>
-                                    </Flex>
-                                  </div>
-
-                                  </>
-                                )
-                            })
-                    } */}
-             
-                </Stack>
-                </Flex>
+          <Box m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .75)' >
+            <Box fontSize='16px' fontWeight={700} color='gray.700'>
+              <p> Current Quiz</p>
             </Box>
+            <Flex direction='row' p={2} m={2} >
+                 
+            <List width='100%'>
+                <Stack spacing={5}>
+                  <ListItem>
+                    <Box  cursor='pointer' fontWeight={700} 
+                     bg='white' boxShadow='1px 1px 1px 2px rgba(97, 143, 217, .75)'p='10px'
+                      _hover={{
+                        bg:'#265e9e', color:'white',
+                      }}>
+                        <Text >Topic: Fractions</Text>
+                        <Text>Time:</Text>
+                        <Text>Status:</Text>
+                    </Box>
+                  </ListItem>
+                </Stack>
+             </List>
+                </Flex>
+          </Box>
         </>
     )
 }
