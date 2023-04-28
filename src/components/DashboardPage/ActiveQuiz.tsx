@@ -1,6 +1,6 @@
 import { Topic } from '@/src/atom/quizAtoms';
 import { auth, firestore } from '@/src/firebase/clientApp';
-import { Box, Flex, Heading, List, ListItem, Stack, Text, } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, List, ListItem, Stack, Text, } from '@chakra-ui/react';
 import { doc, runTransaction, serverTimestamp } from 'firebase/firestore';
 import {useRouter} from 'next/router'
 import React, { useState } from 'react';
@@ -59,7 +59,7 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({topicInfo}) => {
     }
     return (
         <>
-          <Box m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)' >
+          <Box onClick={goToQuiz} m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)' >
             <Box fontSize='16px' fontWeight={700} color='gray.700'>
               <p> Current Quiz</p>
             </Box>
