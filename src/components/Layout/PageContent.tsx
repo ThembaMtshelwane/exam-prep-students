@@ -19,11 +19,11 @@ const PageContent:React.FC<Props> = ({children}) => {
             height='100%'
             alignContent='center'
             maxWidth='860px'
-            border='2px solid #265e9e' 
             bg='white'
-            borderRadius='20px'  
+            borderRadius='0'  
             m={1}  
-            pt={0}
+            p={5}
+            boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)'
             >
                 {children && children}
             </Flex> 

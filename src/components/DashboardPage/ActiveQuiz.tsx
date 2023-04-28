@@ -59,7 +59,7 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({topicInfo}) => {
     }
     return (
         <>
-          <Box m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .75)' >
+          <Box m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)' >
             <Box fontSize='16px' fontWeight={700} color='gray.700'>
               <p> Current Quiz</p>
             </Box>
