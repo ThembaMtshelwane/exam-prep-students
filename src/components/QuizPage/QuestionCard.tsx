@@ -68,7 +68,11 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
             }
              </Stack> <br/> 
              
-             {isStart && <>  <Button bg='#265e9e' color='white' onClick={nextQuestions}> Next </Button><br/> </> } 
+             {isStart && <>  <Button bg='#265e9e' color='white' onClick={nextQuestions}
+              _hover={{
+                boxShadow:'5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)',
+              }}
+             > Next </Button><br/> </> } 
          </Flex>  
       </Box>
       }
@@ -98,7 +102,10 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
               }
             </Stack> <br/> 
          
-            {isStart && <>  <Button bg='#265e9e' color='white' onClick={nextQuestions}> Next </Button><br/> </> } 
+            {isStart && <>  <Button bg='#265e9e' color='white' onClick={nextQuestions}  
+                  _hover={{
+                    boxShadow:'5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)',
+                  }}> Next </Button><br/> </> } 
              {!isStart && <> <Button bg='#265e9e' color='white' onClick={startQuiz}> Start </Button><br/></> }
         </Flex>  
      </Box>
