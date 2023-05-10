@@ -74,7 +74,8 @@ const Register:React.FC = () => {
 
             {/* ----- Register/Signin Button------- */}
             <Button bg= "#265e9e" color="white" mb={2} mt={2} type='submit'
-              width='100%' isLoading={loading}
+              width='100%' isLoading={loading} 
+               _hover={{bg:"#265e9e",boxShadow:'5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)',}}
               >Register
             </Button>
 

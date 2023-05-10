@@ -29,7 +29,9 @@ export default function Home() {
                   Description:Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat perspiciatis cumque voluptate asperiores beatae fugit velit eveniet alias hic! Id, esse! Nemo temporibus alias molestiae!
             </Text>  
 
-            <Button mt={2} color='#265e9e' width='30%' onClick={start}>
+            <Button mt={2} color='#265e9e' width='30%'
+             _hover={{ boxShadow:'0 0 1px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)' }}
+             onClick={start}>
               Start Quiz
             </Button>   
         </Flex>
