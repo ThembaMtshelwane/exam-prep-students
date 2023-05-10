@@ -2,19 +2,16 @@ import { Topic } from '@/src/atom/quizAtoms';
 import ActiveQuiz from '@/src/components/DashboardPage/ActiveQuiz';
 import PreviousQuiz from '@/src/components/DashboardPage/PreviousQuiz';
 import PageContent from '@/src/components/Layout/PageContent';
-import { firestore,auth } from '@/src/firebase/clientApp';
-import { Box,Text } from '@chakra-ui/react';
-import { getDocs, collection } from 'firebase/firestore';
-import { GetServerSidePropsContext } from 'next';
+import {auth } from '@/src/firebase/clientApp';
+import { Box, } from '@chakra-ui/react';
 import React from 'react';
-import safeJsonStringify from 'safe-json-stringify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 type DashboardProps = {
     topicInfo:Topic[]
 };
 
-const Dashboard:React.FC<DashboardProps> = ({topicInfo}) => {
+const Dashboard:React.FC<DashboardProps> = () => {
     const [user] = useAuthState(auth)
     return (
         <>

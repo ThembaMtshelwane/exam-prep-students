@@ -5,7 +5,7 @@ type QuizInfoProps = {
 
 };
 
-const QuizInfo:React.FC<QuizInfoProps> = ({}) => {
+const QuizInfo:React.FC<QuizInfoProps> = () => {
 
     return (
          <>  
