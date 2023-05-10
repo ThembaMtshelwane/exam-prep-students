@@ -10,10 +10,11 @@ import safeJsonStringify from 'safe-json-stringify'
 
 type QuizPageProps = {
     // All topic data=> questions, options...
-    topicQuestionData:QuestionTemplate[]
+    topicQuestionData:QuestionTemplate[],
+    topicInfoData:Topic[],
 };
 
-const QuizPage:React.FC<QuizPageProps> = ({topicQuestionData}) => {
+const QuizPage:React.FC<QuizPageProps> = ({topicQuestionData,topicInfoData}) => {
     
     return (
         <>
@@ -30,25 +31,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     // Get topic data from database and pass it to the client
     try {
         const testQuestionsRef =  '/topics/fractions/questions'
-        const testTopicssRef =  '/topics'
-        const topicQuestionsCollectionRef = `topics/${context.query.topicID as string}/questions`// get the approprate collection based on the router input
+        const questionsFromDB = await getDocs(collection(firestore,testQuestionsRef)) // get questions collection from database
+      
+       // const topicQuestionsCollectionRef = `topics/${context.query.topicID as string}/questions`// get the approprate collection based on the router input
        // const questionsFromDB = await getDocs(collection(firestore,topicQuestionsCollectionRef)) // get questions collection from database
-       
-       const questionsFromDB = await getDocs(collection(firestore,testQuestionsRef)) // get questions collection from database
-       const topicInfoFromDB = await getDocs(collection(firestore,testTopicssRef)) // get topic collection from database
-        
+               
         let questions:any[] =[]
-        let topicInfo:any[] =[]
 
         // store all questions from the database into the questions array
         questionsFromDB.forEach((doc) => {
             questions.push({ ...doc.data()})
         });
 
-         // store all topics from the database into the topicInfo array
-        //  topicInfoFromDB.forEach((doc) => {
-        //     topicInfo.push({ ...doc.data()})
-        //  });
 
         return { //This will make sure the questions are available gloabally
             props:{
@@ -57,11 +51,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                     questions
                 ))
                 :"",
-                // topicInfoData:topicInfo.length!==0
-                // ? JSON.parse(safeJsonStringify(
-                //     topicInfo
-                // ))
-                // :""
             }
         }
 
