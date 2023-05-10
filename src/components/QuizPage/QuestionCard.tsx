@@ -68,7 +68,9 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
                   bg:' #618fd9',
                   color:'white' 
                 }}
-                 onClick={(e) => {checkAnswer(e,qid,answer,questionText) }}>
+                 onClick={(e) => {checkAnswer(e,qid,answer,questionText) }}
+                 
+                 >
                   {option } 
                  </Button>
               ))

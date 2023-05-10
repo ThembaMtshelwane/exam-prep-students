@@ -4,7 +4,7 @@ import {atom} from 'recoil'
 export interface Topic{
     courseCode:string,
     lectureID:string,
-    createdAt?:Timestamp,
+    createdAt:Timestamp,
     listOfLearningObjectives:string[],
     numberOfLearningObjectives:string,
     topicID:string,

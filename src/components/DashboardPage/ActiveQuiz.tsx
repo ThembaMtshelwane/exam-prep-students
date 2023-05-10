@@ -49,8 +49,9 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({}) => {
                     isLoading={loading} width='95%' height='50%' borderRadius={0}
                   >
                     <Flex direction='column'>
-                      <Text >Topic: {prevID.courseCode}</Text>
+                      <Text >Course Code: {prevID.courseCode}</Text>
                       <Text >Topic: {prevID.topicID}</Text>
+                      {/* <Text>Created At: {prevID.createdAt}</Text> */}
                       <Text>Number of Learning Objectives: {prevID.numberOfLearningObjectives}</Text>
                     </Flex> 
                   </Button>
