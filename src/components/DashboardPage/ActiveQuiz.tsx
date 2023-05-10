@@ -28,55 +28,32 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({topicInfo}) => {
     const [user] = useAuthState(auth)
     
     const goToQuiz =() =>{
+      setLoading(true)
       router.push(`quiz/fractions`)
     }
-    const attemptRecord = async (selectedTopic:string) =>{
-    // Add this quiz (selectedTopic) to student history as an attempted quiz
-        setLoading(true)
-        try {
-          const studentDocRef= doc(firestore,`students/${user?.uid}/quizHistory/${selectedTopic}`)
-        
-            await runTransaction(firestore,async (transaction) => {
-            //  const studentSnippet = await transaction.get(studentDocRef)
-            //  if(studentSnippet.exists()){
-            //     throw new Error('Sorry Quiz already taken.')
-            //   }
-            //overwrite previous info
-             transaction.set(studentDocRef,{
-                topicId : selectedTopic,
-                isComplete: false,
-                attemptedAts : serverTimestamp(),                
-                })
-            //  router.push(`quiz/fractions`)
-             router.push(`quiz/${selectedTopic}`)
-            })
 
-        } catch (error:any) {
-          console.log('handleCreateQuiz error ',error)
-          setError(error.message)
-        }
-         setLoading(false)
-    }
     return (
         <>
           <Box onClick={goToQuiz} m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)' >
             <Box fontSize='16px' fontWeight={700} color='gray.700' p={2}>
-              <p> Current Quiz</p>
+               Current Quiz
             </Box>
             <Flex direction='row' pr={2} m={2} >
                  
             <List width='100%'>
                 <Stack spacing={5}>
                   <ListItem> 
-                    <Box  cursor='pointer' fontWeight={700} 
-                     bg='white' boxShadow='1px 1px 1px 2px rgba(97, 143, 217, .75)'p='10px'
-                      _hover={{
-                        bg:'#265e9e', color:'white',
-                      }}>
-                        <Text >Topic: Fractions</Text>
-                        <Text>Time:</Text>
-                        <Text>Status:</Text>
-                    </Box>
+                    <Button fontWeight={700} bg='white' boxShadow='1px 1px 1px 2px rgba(97, 143, 217, .75)'p='10px'  _hover={{ bg:'#265e9e', color:'white',}}
+                      isLoading={loading}
+                      width='95%'
+                      height='50%'
+                      >
+                        <Flex direction='column'>
+                          <Text >Topic: Fractions</Text>
+                          <Text>Time:</Text>
+                          <Text>Status:</Text>
+                        </Flex>
+                    </Button>
                   </ListItem>
                 </Stack>
              </List>
