@@ -22,37 +22,11 @@ const Dashboard:React.FC<DashboardProps> = ({topicInfo}) => {
          <Box  p={5} m={0} fontSize='20px' fontWeight={700}>
              <p> Welcome {user?.email},</p>
           </Box>
-            <ActiveQuiz topicInfo= {topicInfo}/>
+            <ActiveQuiz/>
             <PreviousQuiz/>
          </PageContent>
         </>
     )   
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-    // let questionsFromDB: QuestionTemplate[] =[]
-    // Get topic data from database and pass it to the client
-    try {
-       const testTopicssRef =  '/topics'
-       const topicInfoFromDB = await getDocs(collection(firestore,testTopicssRef)) // get topic collection from database
-       let topicInfo:any[] =[]
-       // store all topics from the database into the topicInfo array
-       topicInfoFromDB.forEach((doc) => {
-          topicInfo.push({ ...doc.data()})
-       });
-
-        return { //This will make sure the questions are available gloabally
-            props:{
-                topicInfoData:topicInfo.length!==0
-                ? JSON.parse(safeJsonStringify(
-                    topicInfo
-                ))
-                :"",
-            }
-        }
-
-    } catch (error) {
-        console.log('getServerSideProps error',error)   
-    }
-}
 export default Dashboard;
