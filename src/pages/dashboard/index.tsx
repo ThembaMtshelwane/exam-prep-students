@@ -8,7 +8,6 @@ import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 type DashboardProps = {
-    topicInfo:Topic[]
 };
 
 const Dashboard:React.FC<DashboardProps> = () => {
