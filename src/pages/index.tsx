@@ -30,7 +30,7 @@ export default function Home() {
             </Text>  
 
             <Button mt={2} color='#265e9e' width='30%'
-             _hover={{ boxShadow:'0 0 1px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)' }}
+              _hover={{boxShadow:'5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)',}}
              onClick={start}>
               Start Quiz
             </Button>   

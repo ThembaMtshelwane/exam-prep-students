@@ -37,7 +37,12 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
     {!isStart && <> 
       <Box  border='2px solid #265e9e' borderRadius={5} m ={2} p={5}>
         <Flex direction=  'column' p={2} m={2} > 
-          <Button bg='#265e9e' color='white' onClick={startQuiz}> Start Quiz </Button><br/>
+          <Button bg='#265e9e' color='white'
+            _hover={{boxShadow:'5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)',}}
+           onClick={startQuiz}
+           > 
+           Start Quiz
+          </Button><br/>
         </Flex>  
         </Box>
     </> }
