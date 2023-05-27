@@ -58,13 +58,14 @@ const Results:React.FC<ResultsProps> = ({data,endQuiz}) => {
       <Box m ={2} p={5}
       boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)'
       >
-        <Text fontSize={20} fontWeight={700}>Results</Text>
-        <Flex direction=  'column' p={2} m={2} > 
+        
+        <Flex direction=  'column' > 
+        <Text fontSize={20} fontWeight={700} mb='5px'>Results</Text>
         <Stack spacing={2} align='center'>
         {
           data.map((prevID:any,index:number) => (
-            <Box bg='white' color='black' border='2px solid #265e9e' width='100%'key={index} p={2} m={2}
-            borderRadius={10}
+            <Box bg='white' color='black'  width='100%'key={index} p={2} m={2}
+            borderRadius={0} boxShadow='1px 1px 1px 2px rgba(97, 143, 217, .75)'
             >
               <Text>Question: {prevID.question}</Text>
               <Text>Result: {prevID.result}</Text>
