@@ -10,15 +10,15 @@ import { getQuestion } from '../../api/QuestionData';
 type QuizPageProps = {
     // All topic data=> questions, options...
     topicQuestionData:QuestionTemplate[],
-    context: GetServerSidePropsContext
+    name :String
 };
 
-const QuizPage:React.FC<QuizPageProps> = ({topicQuestionData,context}) => {
+const QuizPage:React.FC<QuizPageProps> = ({topicQuestionData, name}) => {
     
     return (
         <>
           <PageContent>
-              <QuizInfo />
+              <QuizInfo topicName ={name} />
               <Questions questions={topicQuestionData}/>
             </PageContent>   
         </>

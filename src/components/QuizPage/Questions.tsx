@@ -22,6 +22,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
   
   // Used to set the first question data. From the text, options, question id and answer
   const [questionText, setQuestionText] = useState<string>('');
+  const [file,setQuestionFile] = useState<string>('');
   const [options, setOptions] = useState<string[]>(['','','','']);
   const [qid, setQuestionID] = useState<string>('');
   const [answer, setAnswer] = useState('');
@@ -59,13 +60,13 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     const quadQ: any[] = [];   // Stores level 4 questions
 
     questions.forEach((q: any) => {
-      if (q.level === 1) {
+      if (q.questionLevel === 1) {
         mainQs.push(q);
-      } else if (q.level === 2) {
+      } else if (q.questionLevel === 2) {
         secQs.push(q);
-      } else if (q.level === 3) {
+      } else if (q.questionLevel === 3) {
         terQs.push(q);
-      } else if (q.level === 4) {
+      } else if (q.questionLevel === 4) {
         quadQ.push(q);
       }
     });
@@ -74,6 +75,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
 
   // Start Quiz
   function startQuiz() {
+    console.log('questions', questions)
     /*
       This function is called when the START button is pressed and starts the quiz
       Here the first question's information is retrived using getLevel() and set by using setQuestion()
@@ -82,6 +84,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     setIsStart(true)
     setIsDisplayFirst(true)
     const sortedQuestions = sortData()  // =[mainQs, secQs, terQs,quadQ]
+    console.log('sorted questions', sortedQuestions)
     if (sortedQuestions) {
      setAllQuestions(sortedQuestions); // set all available questions
      setLastLayer (sortedQuestions.length)
@@ -97,9 +100,10 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
 
   function setQuestion(dataArray: any[]) {
     setQuestionText(dataArray[questionNumber].question)
+    setQuestionFile(dataArray[questionNumber].fileURL)
     setOptions(dataArray[questionNumber].questionOptions)
-    setAnswer(dataArray[questionNumber].answer)
-    setQuestionID(dataArray[questionNumber].id)
+    setAnswer(dataArray[questionNumber].questionAnswer)
+    setQuestionID(dataArray[questionNumber].questionID)
   }
 
   function nextQuestions() {
@@ -137,20 +141,27 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
           // Quiz Ending conditions
           // quizEndingConditions() 
           // case 1/Best case: Answers the first question correctly
-          if( (getIncorrect() === 'empty')  && (levelNumber===FIRST_LAYER ) ){ setEndQuiz(true)
+          if( (getIncorrect() === 'empty')  && (levelNumber===FIRST_LAYER ) ){ 
+            setEndQuiz(true)
+            console.log('Best case END')
             return
           }
 
           // case 3/Worst case: Answers the ALL question Incorrectly
-          if( (questionNumber === currentLevelQuestions.length) && (levelNumber===LAST_LAYER ) ){setEndQuiz(true)
+          if( (questionNumber === currentLevelQuestions.length) && (levelNumber===LAST_LAYER ) ){
+            setEndQuiz(true)
+            console.log('Woest case END')
             return
           } 
 
           // If there is previous question information
           if(previousQuestionsID.length !=0){
+            console.log('previousQuestionsID',previousQuestionsID)
+            console.log('getIncorrect()',getIncorrect())
             // Go through all the previous question ids
-            const newnew = [...previousQuestionsID,(getIncorrect())].filter((prev:any) =>{
+            const newnew = [...previousQuestionsID,(getIncorrect())].filter((prev:string) =>{
               //edit the previous ids to make comapring easier eg 1.1 becomes 11
+              console.log('prev',prev)
               const prevEdited =prev.replace(/[.]/g,'')
               console.log('prev id',prevEdited)
 
@@ -158,12 +169,14 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
               const updated = canidateQuestions.filter((currentQuestionID:any) =>{
                 //edit the previous ids to make comapring easier
                 // for these ids remove the last character  eg 1.1.1 becomes 11
-                const currEdited = currentQuestionID.id.replace(/[.]/g,'').substring(0,levelNumber)
+                const currEdited = currentQuestionID.questionID.replace(/[.]/g,'').substring(0,levelNumber)
                 console.log('curr id',currEdited)
                 console.log(prevEdited === currEdited)
                 // if the ids match, it means candidate question is valid to be added to the new current level questions
                 return prevEdited === currEdited
               })
+              console.log('updated', updated)
+
               // Add the valid question to the current level questions
               setCurrentLevelQuestions(current => [ ...current, ...updated]) 
               emptyCollection =[...emptyCollection, ...updated] 
@@ -176,9 +189,12 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
 
           // Quiz Ending conditions continued
           // case 2 A mix of correct and incorrect
-          if ( (emptyCollection.length ===0) && (levelNumber> FIRST_LAYER )) {setEndQuiz(true)
-            return
-          }      
+
+          // if ( (emptyCollection.length ===0) && (levelNumber> FIRST_LAYER )) {
+          //   console.log('A mix END')
+          //   setEndQuiz(true)
+          //   return
+          // }      
         }
         
       setIsAnswered(false)
@@ -186,7 +202,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
   }
 
  // Evaluate choices
-  function checkAnswer(event: React.MouseEvent<HTMLButtonElement> , qid:string, answer:string, q:string){
+  function checkAnswer(event: React.MouseEvent<HTMLButtonElement> , id:string, answer:string, q:string){
     setIsAnswered(true)
     const selectedAnswer = event.currentTarget.innerText
     if (selectedAnswer === answer) { // correct answer
@@ -197,8 +213,9 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     } 
     else{ // incorrect answer
       console.log('incorrect answer')
+      console.log('qid from incorrect answer',id)
       // If the question is NOT ANSWERED CORRECTLY add the question id
-      setIncorrectCollection(current =>[...current,qid])
+      setIncorrectCollection(current =>[...current,id])
       setStudentResultsData(current =>[...current,{question:q,result:'wrong'}])
     }
   }
@@ -218,6 +235,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
           startQuiz = {startQuiz} 
           allQuestions = {allQuestions}
           questionText = {questionText}
+          fileURL = {file}
           options = {options}
           questionNumber = {questionNumber}
           levelNumber = {levelNumber}

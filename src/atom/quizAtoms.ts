@@ -12,6 +12,7 @@ export interface Topic{
 
 export interface QuestionTemplate{
     question:string,
+    fileURL?:string,
     questionAnswer:string,
     questionID:string,
     questionLevel:string,

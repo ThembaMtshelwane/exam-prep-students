@@ -11,6 +11,7 @@ export const getQuestion  = async (context: GetServerSidePropsContext) =>{
         const questionsFromDB = await getDocs(collection(firestore,topicQuestionsCollectionRef)) // get questions collection from database
                 
          let questions:any[] =[]
+         const name = context.query.topicID as string
  
          // store all questions from the database into the questions array
          questionsFromDB.forEach((doc) => {
@@ -23,7 +24,7 @@ export const getQuestion  = async (context: GetServerSidePropsContext) =>{
                  ? JSON.parse(safeJsonStringify(
                      questions
                  ))
-                 :"",
+                 :"",name
              }
          }
  
