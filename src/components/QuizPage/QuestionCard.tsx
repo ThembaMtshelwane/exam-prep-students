@@ -99,7 +99,7 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
         <Text >{currentLevelQuestions[questionNumber-1].question}</Text>  
         <Image
           objectFit='cover'
-          src={fileURL}
+          src={currentLevelQuestions[questionNumber-1].fileURL}
           alt='question'
          />
         

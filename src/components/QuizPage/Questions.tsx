@@ -70,7 +70,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
         quadQ.push(q);
       }
     });
-    return [mainQs, secQs, terQs/*,quadQ*/];
+    return [mainQs, secQs, terQs,quadQ];
   }
 
   // Start Quiz
