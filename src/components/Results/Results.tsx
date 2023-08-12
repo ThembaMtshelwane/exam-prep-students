@@ -64,11 +64,16 @@ const Results:React.FC<ResultsProps> = ({data,endQuiz}) => {
         <Stack spacing={2} align='center'>
         {
           data.map((prevID:any,index:number) => (
-            <Box bg='white' color='black'  width='100%'key={index} p={2} m={2}
+            <Box bg='white' color='black'  width='100%'key={index*9} p={2} m={2}
             borderRadius={0} boxShadow='1px 1px 1px 2px rgba(97, 143, 217, .75)'
             >
               <Text>Question: {prevID.question}</Text>
               <Text>Result: {prevID.result}</Text>
+              <Text>Resources: {prevID.resources}</Text>
+              {
+                console.log('resources ',prevID.resources)
+              // prevID.resources
+              }
             </Box>
            ))
          }

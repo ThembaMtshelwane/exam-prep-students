@@ -41,6 +41,7 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({}) => {
         <List width='100%'>
           <Stack spacing={5}>
           {
+            topicData.length!=0 ? 
             topicData.map((prevID:Topic,index:number) => (
               <ListItem key={index}> 
                 <Link href={`quiz/${prevID.topicID}`}>
@@ -57,7 +58,11 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({}) => {
                   </Button>
                 </Link>
               </ListItem>
-          ))}
+            )):
+            <Flex direction='column'>
+              <Text >No Available Quiz</Text>
+            </Flex> 
+          }
           </Stack>
          </List>
             </Flex>

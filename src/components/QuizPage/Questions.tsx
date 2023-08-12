@@ -75,7 +75,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
 
   // Start Quiz
   function startQuiz() {
-    console.log('questions', questions)
+    // console.log('questions', questions)
     /*
       This function is called when the START button is pressed and starts the quiz
       Here the first question's information is retrived using getLevel() and set by using setQuestion()
@@ -84,7 +84,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     setIsStart(true)
     setIsDisplayFirst(true)
     const sortedQuestions = sortData()  // =[mainQs, secQs, terQs,quadQ]
-    console.log('sorted questions', sortedQuestions)
+    // console.log('sorted questions', sortedQuestions)
     if (sortedQuestions) {
      setAllQuestions(sortedQuestions); // set all available questions
      setLastLayer (sortedQuestions.length)
@@ -104,6 +104,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
     setOptions(dataArray[questionNumber].questionOptions)
     setAnswer(dataArray[questionNumber].questionAnswer)
     setQuestionID(dataArray[questionNumber].questionID)
+    // console.log('options', dataArray[questionNumber].questionOptions)
   }
 
   function nextQuestions() {
@@ -202,21 +203,27 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
   }
 
  // Evaluate choices
-  function checkAnswer(event: React.MouseEvent<HTMLButtonElement> , id:string, answer:string, q:string){
+  function checkAnswer(event: React.MouseEvent<HTMLButtonElement> , id:string, answer:string, q:string, resourceList:string[]=['']){
     setIsAnswered(true)
     const selectedAnswer = event.currentTarget.innerText
     if (selectedAnswer === answer) { // correct answer
       console.log('correct answer')
       // If the question is ANSWERED CORRECTLY add empty instead of the question id
       setIncorrectCollection(current =>[...current,'empty'])
-      setStudentResultsData(current =>[...current,{question:q,result:'correct'}])
+      setStudentResultsData(current =>[...current,{question:q,result:'correct',resources:['']}])
     } 
     else{ // incorrect answer
       console.log('incorrect answer')
-      console.log('qid from incorrect answer',id)
+      // console.log('qid from incorrect answer',id)
       // If the question is NOT ANSWERED CORRECTLY add the question id
       setIncorrectCollection(current =>[...current,id])
-      setStudentResultsData(current =>[...current,{question:q,result:'wrong'}])
+      if (resourceList.length===0) {
+        console.log('resource from incorrect answer NONE GIVEN',resourceList)
+        setStudentResultsData(current =>[...current,{question:q,result:'wrong',resources:['']}])
+      }else{
+        console.log('resource from incorrect answer EXISTING',resourceList)
+        setStudentResultsData(current =>[...current,{question:q,result:'wrong',resources: resourceList}])
+      }
     }
   }
 

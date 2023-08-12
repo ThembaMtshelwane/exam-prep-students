@@ -64,7 +64,7 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
          <Flex direction=  'column' p={2} m={2} > 
              <Stack spacing={2} align='center'>
              {
-              Object.values(options).map((option:string,index:number) => (
+              options.map((option:string,index:number) => (
                 <Button color='black' border='2px solid #265e9e' width='100%' key={index} 
                 _active={{
                   transform: 'scale(0.98)',
@@ -106,7 +106,7 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
         <Flex direction=  'column' p={2} m={2} > 
             <Stack spacing={2} align='center'>
               {
-                 Object.values(currentLevelQuestions[questionNumber-1].questionOptions).map((option:string,index:number) => (
+                currentLevelQuestions[questionNumber-1].questionOptions.map((option:string,index:number) => (
                   <Button bg='white' color='black' border='2px solid #265e9e' width='100%'key={index} 
                   _active={{
                     transform: 'scale(0.98)',
@@ -116,7 +116,16 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
                     bg:' #618fd9',
                     color:'white' 
                   }}
-                  onClick={(e) => {checkAnswer(e,currentLevelQuestions[questionNumber-1].questionID, currentLevelQuestions[questionNumber-1].questionAnswer,currentLevelQuestions[questionNumber-1].question) }}>
+                  onClick={(e) => {
+                    checkAnswer(e,currentLevelQuestions[questionNumber-1].questionID,
+                                currentLevelQuestions[questionNumber-1].questionAnswer,
+                                currentLevelQuestions[questionNumber-1].question,
+                                currentLevelQuestions[questionNumber-1].questionResources
+                                )
+                    console.log('CARD resources ',currentLevelQuestions[questionNumber-1].questionResources)
+                              }
+                                
+                                }>
                     {option}
                   </Button>
                 ))
