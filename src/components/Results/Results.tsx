@@ -1,4 +1,4 @@
-import { border, Box, Button, Flex, Stack,Text } from '@chakra-ui/react';
+import { border, Box, Button, Flex, List, ListItem, Stack,Text } from '@chakra-ui/react';
 import { doc, runTransaction, serverTimestamp } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { auth, firestore } from '@/src/firebase/clientApp';
@@ -61,23 +61,19 @@ const Results:React.FC<ResultsProps> = ({data,endQuiz}) => {
         
         <Flex direction=  'column' > 
         <Text fontSize={20} fontWeight={700} mb='5px'>Results</Text>
-        <Stack spacing={2} align='center'>
+        <List spacing={2} >
         {
           data.map((prevID:any,index:number) => (
-            <Box bg='white' color='black'  width='100%'key={index*9} p={2} m={2}
+            <ListItem bg='white' color='black'  width='100%'key={index*9} p={2} m={2}
             borderRadius={0} boxShadow='1px 1px 1px 2px rgba(97, 143, 217, .75)'
             >
               <Text>Question: {prevID.question}</Text>
               <Text>Result: {prevID.result}</Text>
               <Text>Resources: {prevID.resources}</Text>
-              {
-                console.log('resources ',prevID.resources)
-              // prevID.resources
-              }
-            </Box>
+            </ListItem>
            ))
          }
-          </Stack> <br/> 
+        </List> <br/> 
           </Flex> 
       </Box>  
       }
