@@ -22,14 +22,15 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({}) => {
   const [loading, setLoading] = useState(false)
   const [topicData, setTopics] = useState<Topic[]>([]);
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchTopics = async () => {
       const data = await getTopicInfo();
       setTopics(data?.props.topicData);
     };
-
     fetchTopics();
   }, []);
+
+  console.log('topic data for students',topicData)
   return (
     <>
       <Box m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)'>

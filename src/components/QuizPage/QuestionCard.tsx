@@ -97,11 +97,15 @@ const QuestionCard: React.FC <QuestionCardProps>  = ({
         
         <Text fontWeight={700}>Question {questionNumber} of {currentLevelQuestions.length} </Text>
         <Text >{currentLevelQuestions[questionNumber-1].question}</Text>  
+        
+        {currentLevelQuestions[questionNumber-1].fileURL != '' ? 
         <Image
           objectFit='cover'
           src={currentLevelQuestions[questionNumber-1].fileURL}
           alt='question'
-         />
+         />        
+        :''}
+
         
         <Flex direction=  'column' p={2} m={2} > 
             <Stack spacing={2} align='center'>
