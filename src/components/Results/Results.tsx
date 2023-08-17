@@ -1,4 +1,4 @@
-import { border, Box, Button, Flex, List, ListItem, Stack,Text } from '@chakra-ui/react';
+import { border, Box, Button, Flex, Link, List, ListItem, Stack,Text } from '@chakra-ui/react';
 import { doc, runTransaction, serverTimestamp } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { auth, firestore } from '@/src/firebase/clientApp';
@@ -51,6 +51,16 @@ const Results:React.FC<ResultsProps> = ({data,endQuiz}) => {
             }}
              onClick={attemptRecord}
            > Show Results </Button><br/>
+
+          <Link href='/dasgboard'>
+            <Button bg='#265e9e' color='white' 
+               boxShadow='5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)'
+               _hover={{
+                transform: 'scale(0.95)',
+              }}
+              width='100%'
+             > Back </Button><br/>
+          </Link>
          </Flex>  
       }
       
