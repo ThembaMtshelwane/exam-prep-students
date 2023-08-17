@@ -52,7 +52,7 @@ const Results:React.FC<ResultsProps> = ({data,endQuiz}) => {
              onClick={attemptRecord}
            > Show Results </Button><br/>
 
-          <Link href='/dasgboard'>
+          <Link href='/dashboard'>
             <Button bg='#265e9e' color='white' 
                boxShadow='5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)'
                _hover={{
@@ -63,7 +63,7 @@ const Results:React.FC<ResultsProps> = ({data,endQuiz}) => {
           </Link>
          </Flex>  
       }
-      
+
       { sendResults &&
       <Box m ={2} p={5}
       boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)'
@@ -83,10 +83,20 @@ const Results:React.FC<ResultsProps> = ({data,endQuiz}) => {
             </ListItem>
            ))
          }
-        </List> <br/> 
+        </List> 
+       
+        <Link href='/dashboard'>
+            <Button bg='#265e9e' color='white' 
+               boxShadow='5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)'
+               _hover={{
+                transform: 'scale(0.95)',
+              }}
+              width='100%'
+             > Back </Button><br/>
+          </Link>
           </Flex> 
       </Box>  
-      }
+      }      
     </>
   )
 

@@ -19,7 +19,7 @@ const Dashboard:React.FC<DashboardProps> = () => {
              <p> Welcome {user?.email},</p>
           </Box>
             <ActiveQuiz/>
-            <PreviousQuiz/>
+            {/* <PreviousQuiz/> */}
          </PageContent>
         </>
     )   

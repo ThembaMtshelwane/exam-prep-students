@@ -35,7 +35,7 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({}) => {
     <>
       <Box m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)'>
         <Box fontSize='16px' fontWeight={700} color='gray.700' p={2}>
-           Current Quiz
+           Created Quizzes
         </Box>
         <Flex direction='row' pr={2} m={2} >
 
