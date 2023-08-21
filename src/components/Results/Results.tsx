@@ -1,6 +1,6 @@
 import { border, Box, Button, Flex, Link, List, ListItem, Stack,Text } from '@chakra-ui/react';
 import { doc, runTransaction, serverTimestamp } from 'firebase/firestore';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { auth, firestore } from '@/src/firebase/clientApp';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import {useRouter} from 'next/router'
@@ -8,29 +8,40 @@ import {useRouter} from 'next/router'
 type ResultsProps = {
     data: any[]
     endQuiz: boolean
+    topicID: string
 };
 
-const Results:React.FC<ResultsProps> = ({data,endQuiz}) => {
+const Results:React.FC<ResultsProps> = ({data,endQuiz,topicID}) => {
     
   const [user] = useAuthState(auth)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [sendResults, setSendResults] = useState(false)
   const router = useRouter()
+  const [userID, setUserID] =useState<any>('')
 
+  useEffect(() => {
+    const getAllIds= ()=>{
+          setUserID(user?.uid)
+      }
+    getAllIds()
+  },[]);
+  console.log('userID', userID)
   const attemptRecord = async () =>{
  
     setLoading(true)
     setSendResults(true)
 
+    /* * * * *  Send data to database * * * * */
     try {
-      const studentDocRef= doc(firestore,`students/${user?.uid}/quizHistory/fractions`)
+      const studentDocRef= doc(firestore,`topics/${topicID}/quizHistory/${user?.uid}`)
     
       await runTransaction(firestore,async (transaction) => {
       //overwrite previous info
        transaction.set(studentDocRef,{
-          topicId : 'fractions',
-          results: data,               
+          topicId : topicID,
+          results: data,    
+          studentID: user?.email,          
           })
       })
     } catch (error:any) {

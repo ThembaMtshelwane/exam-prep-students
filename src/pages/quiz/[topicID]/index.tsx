@@ -10,7 +10,7 @@ import { getQuestion } from '../../api/QuestionData';
 type QuizPageProps = {
     // All topic data=> questions, options...
     topicQuestionData:QuestionTemplate[],
-    name :String
+    name :string
 };
 
 const QuizPage:React.FC<QuizPageProps> = ({topicQuestionData, name}) => {
@@ -19,7 +19,7 @@ const QuizPage:React.FC<QuizPageProps> = ({topicQuestionData, name}) => {
         <>
           <PageContent>
               <QuizInfo topicName ={name} />
-              <Questions questions={topicQuestionData}/>
+              <Questions questions={topicQuestionData} topicName={name}/>
             </PageContent>   
         </>
     )

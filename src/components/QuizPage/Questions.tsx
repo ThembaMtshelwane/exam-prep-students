@@ -7,9 +7,10 @@ import QuestionCard from './QuestionCard';
 type QuestionsProps = {
   // Here are the questions from the database
     questions:QuestionTemplate[]
+    topicName:string
 };
 
-const Questions:React.FC<QuestionsProps> = ({questions}) => {
+const Questions:React.FC<QuestionsProps> = ({questions, topicName}) => {
 
   // Used to set the state for all available questions 
   const [allQuestions, setAllQuestions] = useState<Array<Array<any>>>([[]]);
@@ -256,7 +257,7 @@ const Questions:React.FC<QuestionsProps> = ({questions}) => {
           isDisplaySecondAndBeyond={isDisplaySecondAndBeyond}
           endQuiz={endQuiz}
       />   
-      <Results endQuiz ={endQuiz} data={data}/>
+      <Results endQuiz={endQuiz} data={data} topicID={topicName}/>
    </>
   )
 }
