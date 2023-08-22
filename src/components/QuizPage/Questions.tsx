@@ -76,7 +76,6 @@ const Questions:React.FC<QuestionsProps> = ({questions, topicName}) => {
 
   // Start Quiz
   function startQuiz() {
-    // console.log('questions', questions)
     /*
       This function is called when the START button is pressed and starts the quiz
       Here the first question's information is retrived using getLevel() and set by using setQuestion()
@@ -105,17 +104,17 @@ const Questions:React.FC<QuestionsProps> = ({questions, topicName}) => {
     setOptions(dataArray[questionNumber].questionOptions)
     setAnswer(dataArray[questionNumber].questionAnswer)
     setQuestionID(dataArray[questionNumber].questionID)
-    // console.log('options', dataArray[questionNumber].questionOptions)
   }
 
   function nextQuestions() {
     /*
       After the first question is answered, the student may activate this function by clicking the NEXT button.
       This function will determine the appropriate questions to display based on the previous question's result
-      Here the question counter and questions will be updated. The following quetions ware determined here as well
+      Here the question counter and questions will be updated. The following quetions are determined here as well
     */
-    setIsDisplayFirst(false)
-    setIsDisplaySecondAndBeyond(true)
+    setIsDisplayFirst(false) // remove the first question from view
+    setIsDisplaySecondAndBeyond(true) // show the second level and beyond
+    
     // Before loading the next questions check if the current question is answered
     if(isAnswered){
       // Increment the question count 
@@ -190,13 +189,12 @@ const Questions:React.FC<QuestionsProps> = ({questions, topicName}) => {
           }   
 
           // Quiz Ending conditions continued
-          // case 2 A mix of correct and incorrect
-
-          // if ( (emptyCollection.length ===0) && (levelNumber> FIRST_LAYER )) {
-          //   console.log('A mix END')
-          //   setEndQuiz(true)
-          //   return
-          // }      
+          // case 2: A mix of correct and incorrect
+          if ( (emptyCollection.length ===0) && (levelNumber> FIRST_LAYER )) {
+            console.log('A mix END')
+            setEndQuiz(true)
+            return
+          }      
         }
         
       setIsAnswered(false)

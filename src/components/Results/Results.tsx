@@ -26,7 +26,6 @@ const Results:React.FC<ResultsProps> = ({data,endQuiz,topicID}) => {
       }
     getAllIds()
   },[]);
-  console.log('userID', userID)
   const attemptRecord = async () =>{
  
     setLoading(true)
