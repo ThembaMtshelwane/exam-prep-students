@@ -233,7 +233,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
       setIncorrectCollection((current) => [...current, 'empty'])
       setStudentResultsData((current) => [
         ...current,
-        { question: q, result: 'correct', resources: [''] },
+        { question: q, result: 'correct', resources: [''], answer: answer },
       ])
     } else {
       // incorrect answer

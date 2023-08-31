@@ -116,7 +116,7 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
                   boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
                 >
                   <Text>Question: {prevID.question}</Text>
-                  <Text>Answer: {prevID.questionAnswer}</Text>
+                  <Text>Answer: {prevID.answer}</Text>
                   <Text>Result: {prevID.result}</Text>
                   <Text>Resources: {prevID.resources}</Text>
                 </ListItem>
