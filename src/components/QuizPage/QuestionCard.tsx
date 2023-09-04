@@ -97,6 +97,10 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
             <Stack spacing={2} align="center">
               {options.map((option: string, index: number) => (
                 <Button
+                  whiteSpace="normal"
+                  height="auto"
+                  blockSize="auto"
+                  padding={2}
                   color="black"
                   border="2px solid #265e9e"
                   width="100%"
@@ -114,7 +118,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                     checkAnswer(e, qid, answer, questionText)
                   }}
                 >
-                  {option}
+                  <Text width="100%">{option}</Text>
                 </Button>
               ))}
             </Stack>{' '}
@@ -166,6 +170,10 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
               {currentLevelQuestions[questionNumber - 1].questionOptions.map(
                 (option: string, index: number) => (
                   <Button
+                    whiteSpace="normal"
+                    height="auto"
+                    blockSize="auto"
+                    padding={2}
                     bg="white"
                     color="black"
                     border="2px solid #265e9e"
@@ -197,7 +205,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                       )
                     }}
                   >
-                    {option}
+                    <Text width="100%">{option}</Text>
                   </Button>
                 )
               )}
