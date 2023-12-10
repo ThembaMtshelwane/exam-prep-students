@@ -91,7 +91,11 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
             Question {questionNumber} of {allQuestions[levelNumber - 1].length}{' '}
           </Text>
           <Text>{questionText}</Text>
-          <Image objectFit="cover" src={fileURL} alt="question" />
+          {fileURL ? (
+            <Image objectFit="cover" src={fileURL} alt="question" />
+          ) : (
+            ''
+          )}
 
           <Flex direction="column" p={2} m={2}>
             <Stack spacing={2} align="center">
@@ -155,7 +159,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
           </Text>
           <Text>{currentLevelQuestions[questionNumber - 1].question}</Text>
 
-          {currentLevelQuestions[questionNumber - 1].fileURL != '' ? (
+          {currentLevelQuestions[questionNumber - 1].fileURL ? (
             <Image
               objectFit="cover"
               src={currentLevelQuestions[questionNumber - 1].fileURL}

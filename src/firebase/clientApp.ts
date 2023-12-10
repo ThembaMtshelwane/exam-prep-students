@@ -1,7 +1,7 @@
 import { initializeApp, getApp, getApps } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
-import { getStorage } from 'firebase/storage'
+import { connectAuthEmulator, getAuth } from 'firebase/auth'
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
+import { connectStorageEmulator, getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,3 +21,12 @@ const auth = getAuth(app)
 const storage = getStorage(app)
 
 export { app, firestore, auth, storage }
+
+// Use Firestore emulator if in development environment
+if (process.env.NODE_ENV === 'development') {
+  connectFirestoreEmulator(firestore, 'localhost', 9080)
+  connectAuthEmulator(auth, 'http://localhost:9099') // Emulator Auth URL
+  connectStorageEmulator(storage, 'localhost', 9199) // Emulator Storage URL
+  // If using Firebase Functions emulator, you can also connect it here
+  // firebase.functions().useFunctionsEmulator('http://localhost:5001');
+}
