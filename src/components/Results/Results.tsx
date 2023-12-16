@@ -105,7 +105,7 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
             </Text>
             <List spacing={2}>
               {data.map((prevID: any, index: number) => (
-                <ListItem>
+                <ListItem key={index + prevID.question}>
                   {index === 0 ? (
                     ''
                   ) : (
@@ -141,7 +141,7 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
                             </Text>
                             {prevID.resources.map(
                               (resource: string, index: number) => (
-                                <Text key={index}>{resource}</Text>
+                                <Text key={index + resource}>{resource}</Text>
                               )
                             )}
                           </Box>
