@@ -26,6 +26,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
   const [options, setOptions] = useState<string[]>(['', '', '', ''])
   const [qid, setQuestionID] = useState<string>('')
   const [answer, setAnswer] = useState('')
+  const [loText, setQuestionLO] = useState<string>('')
 
   // Used to get the previous question information ( question id) and stores it
   const [previousQuestionsID, setPreviousQuestionsID] = useState<string[]>([])
@@ -33,7 +34,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
   const [incorrectCollection, setIncorrectCollection] = useState<string[]>([])
   const [studentResultsData, setStudentResultsData] = useState<any[]>([{}])
 
-  // Used as a colletion of the following questions
+  // Used as a collection of the following questions
   const [currentLevelQuestions, setCurrentLevelQuestions] = useState<
     Array<any>
   >([])
@@ -54,7 +55,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
   //Process the questions => Arrange according to levels
   function sortData() {
     if (questions.length === 0) {
-      console.log('Questions do not exist')
+      // console.log('Questions do not exist')
       return
     }
     const mainQs: any[] = [] // Stores level 1 questions
@@ -80,7 +81,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
   function startQuiz() {
     /*
       This function is called when the START button is pressed and starts the quiz
-      Here the first question's information is retrived using getLevel() and set by using setQuestion()
+      Here the first question's information is retrieved using getLevel() and set by using setQuestion()
       Remember the default levelNumber =1 
     */
     setIsStart(true)
@@ -106,13 +107,14 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
     setOptions(dataArray[questionNumber].questionOptions)
     setAnswer(dataArray[questionNumber].questionAnswer)
     setQuestionID(dataArray[questionNumber].questionID)
+    setQuestionLO(dataArray[questionNumber].questionLearningObjectives)
   }
 
   function nextQuestions() {
     /*
       After the first question is answered, the student may activate this function by clicking the NEXT button.
       This function will determine the appropriate questions to display based on the previous question's result
-      Here the question counter and questions will be updated. The following quetions are determined here as well
+      Here the question counter and questions will be updated. The following questions are determined here as well
     */
     setIsDisplayFirst(false) // remove the first question from view
     setIsDisplaySecondAndBeyond(true) // show the second level and beyond
@@ -127,9 +129,9 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
 
       // If the question number is equal to the available questions therefore all questions are answered
       // if the current level questions(questions to be displayed) are NOT available (which is likely at the beginning)
-      //  -comapare the question number to the number of available questions(which is likely to be 1 since there is 1 question)
+      //  -compare the question number to the number of available questions(which is likely to be 1 since there is 1 question)
       // if the current level questions(questions to be displayed) ARE AVAILABLE (which is likely at for beyond the main question)
-      //  -comapare the question number to the number of the current level questions(which is likely at the first qurstion beginning)
+      //  -compare the question number to the number of the current level questions(which is likely at the first qurstion beginning)
       if (
         currentLevelQuestions.length === 0
           ? questionNumber === allQuestions[levelNumber - 1].length
@@ -143,14 +145,14 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
         setCurrentLevelQuestions([])
         // Get all the candidate questions/ possible questions. These will be filtered based on previous questions
         const canidateQuestions = allQuestions[levelNumber]
-        console.log('canidateQuestions', canidateQuestions)
+        // console.log('canidateQuestions', canidateQuestions)
 
         // Quiz Ending conditions
         // quizEndingConditions()
         // case 1/Best case: Answers the first question correctly
         if (getIncorrect() === 'empty' && levelNumber === FIRST_LAYER) {
           setEndQuiz(true)
-          console.log('Best case END')
+          // console.log('Best case END')
           return
         }
 
@@ -160,37 +162,37 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
           levelNumber === LAST_LAYER
         ) {
           setEndQuiz(true)
-          console.log('Woest case END')
+          // console.log('Worst case END')
           return
         }
 
         // If there is previous question information
         if (previousQuestionsID.length != 0) {
-          console.log('previousQuestionsID', previousQuestionsID)
-          console.log('getIncorrect()', getIncorrect())
+          // console.log('previousQuestionsID', previousQuestionsID)
+          // console.log('getIncorrect()', getIncorrect())
           // Go through all the previous question ids
           const newnew = [...previousQuestionsID, getIncorrect()].filter(
             (prev: string) => {
-              //edit the previous ids to make comapring easier eg 1.1 becomes 11
-              console.log('prev', prev)
+              //edit the previous ids to make comparing easier eg 1.1 becomes 11
+              // console.log('prev', prev)
               const prevEdited = prev.replace(/[.]/g, '')
-              console.log('prev id', prevEdited)
+              // console.log('prev id', prevEdited)
 
               // Filter through the candidate question ids
               const updated = canidateQuestions.filter(
                 (currentQuestionID: any) => {
-                  //edit the previous ids to make comapring easier
+                  //edit the previous ids to make comparing easier
                   // for these ids remove the last character  eg 1.1.1 becomes 11
                   const currEdited = currentQuestionID.questionID
                     .replace(/[.]/g, '')
                     .substring(0, levelNumber)
-                  console.log('curr id', currEdited)
-                  console.log(prevEdited === currEdited)
+                  // console.log('curr id', currEdited)
+                  // console.log(prevEdited === currEdited)
                   // if the ids match, it means candidate question is valid to be added to the new current level questions
                   return prevEdited === currEdited
                 }
               )
-              console.log('updated', updated)
+              // console.log('updated', updated)
 
               // Add the valid question to the current level questions
               setCurrentLevelQuestions((current) => [...current, ...updated])
@@ -206,7 +208,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
         // Quiz Ending conditions continued
         // case 2: A mix of correct and incorrect
         if (emptyCollection.length === 0 && levelNumber > FIRST_LAYER) {
-          console.log('A mix END')
+          // console.log('A mix END')
           setEndQuiz(true)
           return
         }
@@ -222,33 +224,46 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
     id: string,
     answer: string,
     q: string,
-    resourceList: string[] = ['']
+    loText: string,
+    resourceList: string[] = [''],
   ) {
     setIsAnswered(true)
     const selectedAnswer = event.currentTarget.innerText
     if (selectedAnswer === answer) {
       // correct answer
-      console.log('correct answer')
+      // console.log('correct answer')
       // If the question is ANSWERED CORRECTLY add empty instead of the question id
       setIncorrectCollection((current) => [...current, 'empty'])
       setStudentResultsData((current) => [
         ...current,
-        { question: q, result: 'correct', resources: [''], answer: answer },
+        {
+          question: q,
+          result: 'correct',
+          resources: [''],
+          answer: answer,
+          loText: loText,
+        },
       ])
     } else {
       // incorrect answer
-      console.log('incorrect answer')
+      // console.log('incorrect answer')
       // console.log('qid from incorrect answer',id)
       // If the question is NOT ANSWERED CORRECTLY add the question id
       setIncorrectCollection((current) => [...current, id])
       if (resourceList.length === 0) {
-        console.log('resource from incorrect answer NONE GIVEN', resourceList)
+        // console.log('resource from incorrect answer NONE GIVEN', resourceList)
         setStudentResultsData((current) => [
           ...current,
-          { question: q, result: 'wrong', resources: [''], answer: answer },
+          {
+            question: q,
+            result: 'wrong',
+            resources: [''],
+            answer: answer,
+            loText: loText,
+          },
         ])
       } else {
-        console.log('resource from incorrect answer EXISTING', resourceList)
+        // console.log('resource from incorrect answer EXISTING', resourceList)
         setStudentResultsData((current) => [
           ...current,
           {
@@ -256,6 +271,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
             result: 'wrong',
             resources: resourceList,
             answer: answer,
+            loText: loText,
           },
         ])
       }
@@ -290,6 +306,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
         isStart={isStart}
         isDisplaySecondAndBeyond={isDisplaySecondAndBeyond}
         endQuiz={endQuiz}
+        loText={loText}
       />
       <Results endQuiz={endQuiz} data={data} topicID={topicName} />
     </>

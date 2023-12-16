@@ -99,26 +99,56 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
 
       {sendResults && (
         <Box m={2} p={5} boxShadow="1px 1px 3px 2px rgba(97, 143, 217, .25)">
-          <Flex direction="column">
+          <Flex direction="column" justify="center" align="center">
             <Text fontSize={20} fontWeight={700} mb="5px">
               Results
             </Text>
             <List spacing={2}>
               {data.map((prevID: any, index: number) => (
-                <ListItem
-                  bg="white"
-                  color="black"
-                  width="100%"
-                  key={index * 9}
-                  p={2}
-                  m={2}
-                  borderRadius={0}
-                  boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
-                >
-                  <Text>Question: {prevID.question}</Text>
-                  <Text>Answer: {prevID.answer}</Text>
-                  <Text>Result: {prevID.result}</Text>
-                  <Text>Resources: {prevID.resources}</Text>
+                <ListItem>
+                  {index === 0 ? (
+                    ''
+                  ) : (
+                    <Box
+                      width="100%"
+                      key={index * 9}
+                      p={2}
+                      m={2}
+                      borderRadius={0}
+                      boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
+                    >
+                      <Flex flexDirection="column">
+                        <Text fontSize="lg">
+                          Question: <strong>{prevID.question}</strong>
+                        </Text>
+                        <Text>
+                          Answer: <strong>{prevID.answer}</strong>
+                        </Text>
+                        <Text>
+                          Result: <strong>{prevID.result}</strong>
+                        </Text>
+                        {prevID.loText ? (
+                          <Text>
+                            Learning Objective: <strong>{prevID.loText}</strong>
+                          </Text>
+                        ) : null}
+                        {prevID.resources.filter(
+                          (item: string) => item.trim() !== ''
+                        ).length > 0 && (
+                          <Box>
+                            <Text fontSize="lg" fontWeight="bold">
+                              Resources:
+                            </Text>
+                            {prevID.resources.map(
+                              (resource: string, index: number) => (
+                                <Text key={index}>{resource}</Text>
+                              )
+                            )}
+                          </Box>
+                        )}
+                      </Flex>
+                    </Box>
+                  )}
                 </ListItem>
               ))}
             </List>
@@ -133,8 +163,7 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
                 }}
                 width="100%"
               >
-                {' '}
-                Back{' '}
+                Back
               </Button>
               <br />
             </Link>

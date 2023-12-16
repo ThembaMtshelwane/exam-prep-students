@@ -7,7 +7,7 @@ export const getQuestion  = async (context: GetServerSidePropsContext) =>{
   // let questionsFromDB: QuestionTemplate[] =[]
     // Get topic data from database and pass it to the client
     try {
-        const topicQuestionsCollectionRef = `topics/${context.query.topicID as string}/questions`// get the approprate collection based on the router input
+        const topicQuestionsCollectionRef = `topics/${context.query.topicID as string}/questions`// get the appropriate collection based on the router input
         const questionsFromDB = await getDocs(collection(firestore,topicQuestionsCollectionRef)) // get questions collection from database
                 
          let questions:any[] =[]
@@ -18,7 +18,7 @@ export const getQuestion  = async (context: GetServerSidePropsContext) =>{
              questions.push({ ...doc.data()})
          });
  
-         return { //This will make sure the questions are available gloabally
+         return { //This will make sure the questions are available globally
              props:{
                  topicQuestionData:questions.length!==0
                  ? JSON.parse(safeJsonStringify(

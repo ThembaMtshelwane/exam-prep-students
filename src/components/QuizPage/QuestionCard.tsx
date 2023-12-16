@@ -19,6 +19,7 @@ type QuestionCardProps = {
   isStart: boolean
   isDisplaySecondAndBeyond: boolean
   endQuiz: boolean
+  loText: string
 }
 const QuestionCard: React.FC<QuestionCardProps> = ({
   startQuiz,
@@ -37,8 +38,9 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
   isStart,
   isDisplaySecondAndBeyond,
   endQuiz,
+  loText,
 }) => {
-  console.log('CARD currentLevelQuestions', currentLevelQuestions)
+  // console.log('CARD currentLevelQuestions', currentLevelQuestions)
   const router = useRouter()
 
   return (
@@ -90,9 +92,12 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
           <Text fontWeight={700}>
             Question {questionNumber} of {allQuestions[levelNumber - 1].length}{' '}
           </Text>
-          <Text>{questionText}</Text>
+          <Text m={2}>{questionText}</Text>
           {fileURL ? (
-            <Image objectFit="cover" src={fileURL} alt="question" />
+            <Flex flexDirection="column">
+              {' '}
+              <Image objectFit="cover" src={fileURL} alt="question" />
+            </Flex>
           ) : (
             ''
           )}
@@ -119,7 +124,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                     color: 'white',
                   }}
                   onClick={(e) => {
-                    checkAnswer(e, qid, answer, questionText)
+                    checkAnswer(e, qid, answer, questionText, loText, [])
                   }}
                 >
                   <Text width="100%">{option}</Text>
@@ -200,13 +205,15 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                           .questionAnswer,
                         currentLevelQuestions[questionNumber - 1].question,
                         currentLevelQuestions[questionNumber - 1]
-                          .questionResources
-                      )
-                      console.log(
-                        'CARD resources ',
+                          .questionLearningObjectives,
                         currentLevelQuestions[questionNumber - 1]
                           .questionResources
                       )
+                      // console.log(
+                      //   'CARD resources ',
+                      //   currentLevelQuestions[questionNumber - 1]
+                      //     .questionResources
+                      // )
                     }}
                   >
                     <Text width="100%">{option}</Text>
