@@ -20,6 +20,7 @@ type QuestionCardProps = {
   isDisplaySecondAndBeyond: boolean
   endQuiz: boolean
   loText: string
+  questionResources: string[]
 }
 const QuestionCard: React.FC<QuestionCardProps> = ({
   startQuiz,
@@ -39,6 +40,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
   isDisplaySecondAndBeyond,
   endQuiz,
   loText,
+  questionResources,
 }) => {
   // console.log('CARD currentLevelQuestions', currentLevelQuestions)
   const router = useRouter()
@@ -124,7 +126,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                     color: 'white',
                   }}
                   onClick={(e) => {
-                    checkAnswer(e, qid, answer, questionText, loText, [])
+                    checkAnswer(e, qid, answer, questionText, loText, questionResources)
                   }}
                 >
                   <Text width="100%">{option}</Text>

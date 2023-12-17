@@ -117,6 +117,7 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
                       borderRadius={0}
                       boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
                     >
+                      {/* {console.log('prevID.resources', prevID.resources)} */}
                       <Flex flexDirection="column">
                         <Text fontSize="lg">
                           Question: <strong>{prevID.question}</strong>
@@ -134,7 +135,7 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
                         ) : null}
                         {prevID.resources.filter(
                           (item: string) => item.trim() !== ''
-                        ).length > 0 && (
+                        ).length > 0 ? (
                           <Box>
                             <Text fontSize="lg" fontWeight="bold">
                               Resources:
@@ -145,6 +146,8 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
                               )
                             )}
                           </Box>
+                        ) : (
+                          ''
                         )}
                       </Flex>
                     </Box>

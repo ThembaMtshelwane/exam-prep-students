@@ -27,6 +27,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
   const [qid, setQuestionID] = useState<string>('')
   const [answer, setAnswer] = useState('')
   const [loText, setQuestionLO] = useState<string>('')
+  const [questionResources, setQuestionResources] = useState<string[]>(['', '', '', ''])
 
   // Used to get the previous question information ( question id) and stores it
   const [previousQuestionsID, setPreviousQuestionsID] = useState<string[]>([])
@@ -108,6 +109,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
     setAnswer(dataArray[questionNumber].questionAnswer)
     setQuestionID(dataArray[questionNumber].questionID)
     setQuestionLO(dataArray[questionNumber].questionLearningObjectives)
+    setQuestionResources(dataArray[questionNumber].questionResources)
   }
 
   function nextQuestions() {
@@ -225,7 +227,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
     answer: string,
     q: string,
     loText: string,
-    resourceList: string[] = [''],
+    resourceList: string[]
   ) {
     setIsAnswered(true)
     const selectedAnswer = event.currentTarget.innerText
@@ -250,31 +252,17 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
       // console.log('qid from incorrect answer',id)
       // If the question is NOT ANSWERED CORRECTLY add the question id
       setIncorrectCollection((current) => [...current, id])
-      if (resourceList.length === 0) {
-        // console.log('resource from incorrect answer NONE GIVEN', resourceList)
-        setStudentResultsData((current) => [
-          ...current,
-          {
-            question: q,
-            result: 'wrong',
-            resources: [''],
-            answer: answer,
-            loText: loText,
-          },
-        ])
-      } else {
-        // console.log('resource from incorrect answer EXISTING', resourceList)
-        setStudentResultsData((current) => [
-          ...current,
-          {
-            question: q,
-            result: 'wrong',
-            resources: resourceList,
-            answer: answer,
-            loText: loText,
-          },
-        ])
-      }
+      // console.log('resource from incorrect answer NONE GIVEN', resourceList)
+      setStudentResultsData((current) => [
+        ...current,
+        {
+          question: q,
+          result: 'wrong',
+          resources: resourceList ? resourceList : ['', '', '', ''],
+          answer: answer,
+          loText: loText,
+        },
+      ])
     }
   }
 
@@ -307,6 +295,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
         isDisplaySecondAndBeyond={isDisplaySecondAndBeyond}
         endQuiz={endQuiz}
         loText={loText}
+        questionResources={ questionResources ? questionResources : ['', '', '', '']}
       />
       <Results endQuiz={endQuiz} data={data} topicID={topicName} />
     </>
