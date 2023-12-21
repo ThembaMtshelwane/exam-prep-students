@@ -10,6 +10,16 @@ type QuestionsProps = {
   topicName: string
 }
 
+interface QuestionData {
+  questionText: string
+  fileURL: string
+  options: string[]
+  qid: string
+  answer: string
+  loText: string
+  questionResources: string[]
+}
+
 const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
   // Used to set the state for all available questions
   const [allQuestions, setAllQuestions] = useState<Array<Array<any>>>([[]])
@@ -20,14 +30,15 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
   // Used to set the level of each question. eg level 1 will show the first question
   const [levelNumber, setLevelNumber] = useState(1)
 
-  // Used to set the first question data. From the text, options, question id and answer
-  const [questionText, setQuestionText] = useState<string>('')
-  const [file, setQuestionFile] = useState<string>('')
-  const [options, setOptions] = useState<string[]>(['', '', '', ''])
-  const [qid, setQuestionID] = useState<string>('')
-  const [answer, setAnswer] = useState('')
-  const [loText, setQuestionLO] = useState<string>('')
-  const [questionResources, setQuestionResources] = useState<string[]>(['', '', '', ''])
+  const [questionData, setQuestionData] = useState<QuestionData>({
+    questionText: '',
+    fileURL: '',
+    options: ['', '', '', ''],
+    answer: '',
+    qid: '',
+    loText: '',
+    questionResources: ['', '', '', ''],
+  })
 
   // Used to get the previous question information ( question id) and stores it
   const [previousQuestionsID, setPreviousQuestionsID] = useState<string[]>([])
@@ -103,13 +114,15 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
   }
 
   function setQuestion(dataArray: any[]) {
-    setQuestionText(dataArray[questionNumber].question)
-    setQuestionFile(dataArray[questionNumber].fileURL)
-    setOptions(dataArray[questionNumber].questionOptions)
-    setAnswer(dataArray[questionNumber].questionAnswer)
-    setQuestionID(dataArray[questionNumber].questionID)
-    setQuestionLO(dataArray[questionNumber].questionLearningObjectives)
-    setQuestionResources(dataArray[questionNumber].questionResources)
+    setQuestionData({
+      questionText: dataArray[questionNumber].question,
+      fileURL: dataArray[questionNumber].fileURL,
+      options: dataArray[questionNumber].questionOptions,
+      answer: dataArray[questionNumber].questionAnswer,
+      qid: dataArray[questionNumber].questionID,
+      loText: dataArray[questionNumber].questionLearningObjectives,
+      questionResources: dataArray[questionNumber].questionResources,
+    })
   }
 
   function nextQuestions() {
@@ -146,8 +159,8 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
         // Reset the current level questions, so we can generate new questions
         setCurrentLevelQuestions([])
         // Get all the candidate questions/ possible questions. These will be filtered based on previous questions
-        const canidateQuestions = allQuestions[levelNumber]
-        // console.log('canidateQuestions', canidateQuestions)
+        const candidateQuestions = allQuestions[levelNumber]
+        // console.log('candidateQuestions', candidateQuestions)
 
         // Quiz Ending conditions
         // quizEndingConditions()
@@ -181,7 +194,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
               // console.log('prev id', prevEdited)
 
               // Filter through the candidate question ids
-              const updated = canidateQuestions.filter(
+              const updated = candidateQuestions.filter(
                 (currentQuestionID: any) => {
                   //edit the previous ids to make comparing easier
                   // for these ids remove the last character  eg 1.1.1 becomes 11
@@ -204,7 +217,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
         } else {
           // If there is no previous question information, the candidate questions automatically
           // becomes the new current level questions
-          setCurrentLevelQuestions(canidateQuestions)
+          setCurrentLevelQuestions(candidateQuestions)
         }
 
         // Quiz Ending conditions continued
@@ -280,22 +293,16 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
       <QuestionCard
         startQuiz={startQuiz}
         allQuestions={allQuestions}
-        questionText={questionText}
-        fileURL={file}
-        options={options}
         questionNumber={questionNumber}
         levelNumber={levelNumber}
         checkAnswer={checkAnswer}
         nextQuestions={nextQuestions}
         currentLevelQuestions={currentLevelQuestions}
         isDisplayFirst={isDisplayFirst}
-        qid={qid}
-        answer={answer}
         isStart={isStart}
         isDisplaySecondAndBeyond={isDisplaySecondAndBeyond}
         endQuiz={endQuiz}
-        loText={loText}
-        questionResources={ questionResources ? questionResources : ['', '', '', '']}
+        questionData={questionData}
       />
       <Results endQuiz={endQuiz} data={data} topicID={topicName} />
     </>

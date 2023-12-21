@@ -2,48 +2,63 @@ import { Flex, Button, Text, Box, Stack, Image, Link } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 import React from 'react'
-type QuestionCardProps = {
-  startQuiz: any
-  allQuestions: any
+
+interface QuestionData {
   questionText: string
   fileURL: string
   options: string[]
+  qid: string
+  answer: string
+  loText: string
+  questionResources: string[]
+}
+
+type QuestionCardProps = {
+  startQuiz: any
+  allQuestions: any
+  // questionText: string //
+  // fileURL: string //
+  // options: string[] //
   questionNumber: number
   levelNumber: number
   checkAnswer: any
   nextQuestions: any
   currentLevelQuestions: any
   isDisplayFirst: boolean
-  qid: string
-  answer: string
+  // qid: string //
+  // answer: string //
   isStart: boolean
   isDisplaySecondAndBeyond: boolean
   endQuiz: boolean
-  loText: string
-  questionResources: string[]
+  // loText: string //
+  // questionResources: string[] //
+  questionData: QuestionData
 }
 const QuestionCard: React.FC<QuestionCardProps> = ({
   startQuiz,
   allQuestions,
-  questionText,
-  fileURL,
-  options,
   questionNumber,
   levelNumber,
   checkAnswer,
   nextQuestions,
   currentLevelQuestions,
   isDisplayFirst,
-  qid,
-  answer,
   isStart,
   isDisplaySecondAndBeyond,
   endQuiz,
-  loText,
-  questionResources,
+  questionData,
 }) => {
   // console.log('CARD currentLevelQuestions', currentLevelQuestions)
   const router = useRouter()
+  const {
+    questionText,
+    fileURL,
+    options,
+    answer,
+    qid,
+    loText,
+    questionResources,
+  } = questionData
 
   return (
     <>
@@ -126,7 +141,14 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                     color: 'white',
                   }}
                   onClick={(e) => {
-                    checkAnswer(e, qid, answer, questionText, loText, questionResources)
+                    checkAnswer(
+                      e,
+                      qid,
+                      answer,
+                      questionText,
+                      loText,
+                      questionResources
+                    )
                   }}
                 >
                   <Text width="100%">{option}</Text>
