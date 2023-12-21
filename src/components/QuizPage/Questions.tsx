@@ -160,14 +160,11 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
         setCurrentLevelQuestions([])
         // Get all the candidate questions/ possible questions. These will be filtered based on previous questions
         const candidateQuestions = allQuestions[levelNumber]
-        // console.log('candidateQuestions', candidateQuestions)
 
         // Quiz Ending conditions
-        // quizEndingConditions()
         // case 1/Best case: Answers the first question correctly
         if (getIncorrect() === 'empty' && levelNumber === FIRST_LAYER) {
           setEndQuiz(true)
-          // console.log('Best case END')
           return
         }
 
@@ -177,21 +174,17 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
           levelNumber === LAST_LAYER
         ) {
           setEndQuiz(true)
-          // console.log('Worst case END')
           return
         }
 
         // If there is previous question information
         if (previousQuestionsID.length != 0) {
-          // console.log('previousQuestionsID', previousQuestionsID)
-          // console.log('getIncorrect()', getIncorrect())
+
           // Go through all the previous question ids
           const newnew = [...previousQuestionsID, getIncorrect()].filter(
             (prev: string) => {
               //edit the previous ids to make comparing easier eg 1.1 becomes 11
-              // console.log('prev', prev)
               const prevEdited = prev.replace(/[.]/g, '')
-              // console.log('prev id', prevEdited)
 
               // Filter through the candidate question ids
               const updated = candidateQuestions.filter(
@@ -201,14 +194,10 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
                   const currEdited = currentQuestionID.questionID
                     .replace(/[.]/g, '')
                     .substring(0, levelNumber)
-                  // console.log('curr id', currEdited)
-                  // console.log(prevEdited === currEdited)
                   // if the ids match, it means candidate question is valid to be added to the new current level questions
                   return prevEdited === currEdited
                 }
               )
-              // console.log('updated', updated)
-
               // Add the valid question to the current level questions
               setCurrentLevelQuestions((current) => [...current, ...updated])
               emptyCollection = [...emptyCollection, ...updated]
@@ -223,7 +212,6 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
         // Quiz Ending conditions continued
         // case 2: A mix of correct and incorrect
         if (emptyCollection.length === 0 && levelNumber > FIRST_LAYER) {
-          // console.log('A mix END')
           setEndQuiz(true)
           return
         }
@@ -246,7 +234,6 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
     const selectedAnswer = event.currentTarget.innerText
     if (selectedAnswer === answer) {
       // correct answer
-      // console.log('correct answer')
       // If the question is ANSWERED CORRECTLY add empty instead of the question id
       setIncorrectCollection((current) => [...current, 'empty'])
       setStudentResultsData((current) => [
@@ -261,11 +248,8 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
       ])
     } else {
       // incorrect answer
-      // console.log('incorrect answer')
-      // console.log('qid from incorrect answer',id)
       // If the question is NOT ANSWERED CORRECTLY add the question id
       setIncorrectCollection((current) => [...current, id])
-      // console.log('resource from incorrect answer NONE GIVEN', resourceList)
       setStudentResultsData((current) => [
         ...current,
         {
