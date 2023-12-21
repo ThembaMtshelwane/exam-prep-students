@@ -2,6 +2,9 @@ import { Flex, Button, Text, Box, Stack, Image, Link } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 import React from 'react'
+import BackButton from '../buttons/BackButton'
+import StartButton from '../buttons/StartButton'
+import Card from './Card'
 
 interface QuestionData {
   questionText: string
@@ -16,22 +19,15 @@ interface QuestionData {
 type QuestionCardProps = {
   startQuiz: any
   allQuestions: any
-  // questionText: string //
-  // fileURL: string //
-  // options: string[] //
   questionNumber: number
   levelNumber: number
   checkAnswer: any
   nextQuestions: any
   currentLevelQuestions: any
   isDisplayFirst: boolean
-  // qid: string //
-  // answer: string //
   isStart: boolean
   isDisplaySecondAndBeyond: boolean
   endQuiz: boolean
-  // loText: string //
-  // questionResources: string[] //
   questionData: QuestionData
 }
 const QuestionCard: React.FC<QuestionCardProps> = ({
@@ -48,17 +44,6 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
   endQuiz,
   questionData,
 }) => {
-  // console.log('CARD currentLevelQuestions', currentLevelQuestions)
-  const router = useRouter()
-  const {
-    questionText,
-    fileURL,
-    options,
-    answer,
-    qid,
-    loText,
-    questionResources,
-  } = questionData
 
   return (
     <>
@@ -66,33 +51,9 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
         <>
           <Box borderRadius={5} m={2} p={5}>
             <Flex direction="column" p={2} m={2}>
-              <Button
-                bg="#265e9e"
-                color="white"
-                boxShadow="5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)"
-                _hover={{ transform: 'scale(0.95)' }}
-                onClick={startQuiz}
-                width="100%"
-              >
-                Start Quiz
-              </Button>
+              <StartButton startQuiz={startQuiz}></StartButton>
               <br />
-
-              <Link href="/dashboard">
-                <Button
-                  bg="#265e9e"
-                  color="white"
-                  boxShadow="5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)"
-                  _hover={{
-                    transform: 'scale(0.95)',
-                  }}
-                  width="100%"
-                >
-                  {' '}
-                  Back{' '}
-                </Button>
-                <br />
-              </Link>
+              <BackButton></BackButton>
             </Flex>
           </Box>
         </>
@@ -100,169 +61,25 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
 
       {/* FOR THE FIRST QUESTION */}
       {isDisplayFirst && (
-        <Box
-          borderRadius={0}
-          boxShadow="1px 1px 3px 2px rgba(97, 143, 217, .25)"
-          m={2}
-          p={5}
-        >
-          <Text fontWeight={700}>
-            Question {questionNumber} of {allQuestions[levelNumber - 1].length}{' '}
-          </Text>
-          <Text m={2}>{questionText}</Text>
-          {fileURL ? (
-            <Flex flexDirection="column">
-              {' '}
-              <Image objectFit="cover" src={fileURL} alt="question" />
-            </Flex>
-          ) : (
-            ''
-          )}
-
-          <Flex direction="column" p={2} m={2}>
-            <Stack spacing={2} align="center">
-              {options.map((option: string, index: number) => (
-                <Button
-                  whiteSpace="normal"
-                  height="auto"
-                  blockSize="auto"
-                  padding={2}
-                  color="black"
-                  border="2px solid #265e9e"
-                  width="100%"
-                  key={index}
-                  _active={{
-                    transform: 'scale(0.98)',
-                  }}
-                  _focus={{
-                    boxShadow:
-                      '0 0 1px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)',
-                    bg: ' #618fd9',
-                    color: 'white',
-                  }}
-                  onClick={(e) => {
-                    checkAnswer(
-                      e,
-                      qid,
-                      answer,
-                      questionText,
-                      loText,
-                      questionResources
-                    )
-                  }}
-                >
-                  <Text width="100%">{option}</Text>
-                </Button>
-              ))}
-            </Stack>{' '}
-            <br />
-            {isStart && (
-              <>
-                {' '}
-                <Button
-                  bg="#265e9e"
-                  color="white"
-                  onClick={nextQuestions}
-                  boxShadow="5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)"
-                  _hover={{ transform: 'scale(0.95)' }}
-                >
-                  {' '}
-                  Next{' '}
-                </Button>
-                <br />{' '}
-              </>
-            )}
-          </Flex>
-        </Box>
+        <Card
+          questionNumber={questionNumber}
+          totalNumOfQuestions={allQuestions[levelNumber - 1].length}
+          currentQuestionData={questionData}
+          isStart={isStart}
+          nextQuestions={nextQuestions}
+          checkAnswer={checkAnswer}
+        ></Card>
       )}
       {/* FOR THE SECOND QUESTION AND BEYOND */}
       {isDisplaySecondAndBeyond && !endQuiz && (
-        <Box
-          borderRadius={0}
-          boxShadow="1px 1px 3px 2px rgba(97, 143, 217, .25)"
-          m={2}
-          p={5}
-        >
-          <Text fontWeight={700}>
-            Question {questionNumber} of {currentLevelQuestions.length}{' '}
-          </Text>
-          <Text>{currentLevelQuestions[questionNumber - 1].question}</Text>
-
-          {currentLevelQuestions[questionNumber - 1].fileURL ? (
-            <Image
-              objectFit="cover"
-              src={currentLevelQuestions[questionNumber - 1].fileURL}
-              alt="question"
-            />
-          ) : (
-            ''
-          )}
-
-          <Flex direction="column" p={2} m={2}>
-            <Stack spacing={2} align="center">
-              {currentLevelQuestions[questionNumber - 1].questionOptions.map(
-                (option: string, index: number) => (
-                  <Button
-                    whiteSpace="normal"
-                    height="auto"
-                    blockSize="auto"
-                    padding={2}
-                    bg="white"
-                    color="black"
-                    border="2px solid #265e9e"
-                    width="100%"
-                    key={index}
-                    _active={{
-                      transform: 'scale(0.98)',
-                    }}
-                    _focus={{
-                      boxShadow:
-                        '0 0 1px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)',
-                      bg: ' #618fd9',
-                      color: 'white',
-                    }}
-                    onClick={(e) => {
-                      checkAnswer(
-                        e,
-                        currentLevelQuestions[questionNumber - 1].questionID,
-                        currentLevelQuestions[questionNumber - 1]
-                          .questionAnswer,
-                        currentLevelQuestions[questionNumber - 1].question,
-                        currentLevelQuestions[questionNumber - 1]
-                          .questionLearningObjectives,
-                        currentLevelQuestions[questionNumber - 1]
-                          .questionResources
-                      )
-                      // console.log(
-                      //   'CARD resources ',
-                      //   currentLevelQuestions[questionNumber - 1]
-                      //     .questionResources
-                      // )
-                    }}
-                  >
-                    <Text width="100%">{option}</Text>
-                  </Button>
-                )
-              )}
-            </Stack>{' '}
-            <br />
-            {isStart && (
-              <>
-                <Button
-                  bg="#265e9e"
-                  color="white"
-                  onClick={nextQuestions}
-                  boxShadow="5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)"
-                  _hover={{ transform: 'scale(0.95)' }}
-                >
-                  {' '}
-                  Next{' '}
-                </Button>
-                <br />{' '}
-              </>
-            )}
-          </Flex>
-        </Box>
+        <Card
+          questionNumber={questionNumber}
+          totalNumOfQuestions={currentLevelQuestions.length}
+          currentQuestionData={currentLevelQuestions[questionNumber - 1]}
+          isStart={isStart}
+          nextQuestions={nextQuestions}
+          checkAnswer={checkAnswer}
+        ></Card>
       )}
     </>
   )
