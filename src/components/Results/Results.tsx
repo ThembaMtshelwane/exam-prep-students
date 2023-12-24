@@ -103,21 +103,21 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
             <Text fontSize={20} fontWeight={700} mb="5px">
               Results
             </Text>
-            <List spacing={2}>
-              {data.map((prevID: any, index: number) => (
+          </Flex>
+          <List spacing={2}>
+            {data.map((prevID: any, index: number) => {
+              return (
                 <ListItem key={index + prevID.question}>
                   {index === 0 ? (
                     ''
                   ) : (
                     <Box
-                      width="100%"
+                      width="80%"
                       key={index * 9}
                       p={2}
-                      m={2}
-                      borderRadius={0}
+                      margin="auto"
                       boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
                     >
-                      {/* {console.log('prevID.resources', prevID.resources)} */}
                       <Flex flexDirection="column">
                         <Text fontSize="lg">
                           Question: <strong>{prevID.question}</strong>
@@ -126,7 +126,7 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
                           Answer: <strong>{prevID.answer}</strong>
                         </Text>
                         <Text>
-                          Result: <strong>{prevID.result}</strong>
+                          Outcome: <strong>{prevID.result}</strong>
                         </Text>
                         {prevID.loText ? (
                           <Text>
@@ -153,24 +153,24 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
                     </Box>
                   )}
                 </ListItem>
-              ))}
-            </List>
-
-            <Link href="/dashboard">
-              <Button
-                bg="#265e9e"
-                color="white"
-                boxShadow="5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)"
-                _hover={{
-                  transform: 'scale(0.95)',
-                }}
-                width="100%"
-              >
-                Back
-              </Button>
-              <br />
-            </Link>
-          </Flex>
+              )
+            })}
+          </List>
+          <br />
+          <Link href="/dashboard">
+            <Button
+              bg="#265e9e"
+              color="white"
+              boxShadow="5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)"
+              _hover={{
+                transform: 'scale(0.95)',
+              }}
+              width="100%"
+            >
+              Back
+            </Button>
+            <br />
+          </Link>
         </Box>
       )}
     </>
