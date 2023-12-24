@@ -1,5 +1,5 @@
-import { QuestionTemplate } from '@/src/atom/quizAtoms'
-import React, { useState } from 'react'
+import { QuestionTemplate, StudentDataTemplate } from '@/src/atom/quizAtoms'
+import React, { useEffect, useState } from 'react'
 import Results from '../Results/Results'
 
 import QuestionCard from './QuestionCard'
@@ -10,19 +10,11 @@ type QuestionsProps = {
   topicName: string
 }
 
-interface QuestionData {
-  questionText: string
-  fileURL: string
-  options: string[]
-  qid: string
-  answer: string
-  loText: string
-  questionResources: string[]
-}
-
 const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
   // Used to set the state for all available questions
-  const [allQuestions, setAllQuestions] = useState<Array<Array<any>>>([[]])
+  const [allQuestions, setAllQuestions] = useState<
+    Array<Array<QuestionTemplate>>
+  >([[]])
 
   // Used to set the question count eg, 1 of ...
   const [questionNumber, setQuestionNumber] = useState<number>(0)
@@ -30,25 +22,29 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
   // Used to set the level of each question. eg level 1 will show the first question
   const [levelNumber, setLevelNumber] = useState(1)
 
-  const [questionData, setQuestionData] = useState<QuestionData>({
-    questionText: '',
+  const [firstQuestionData, setFirstQuestionData] = useState<QuestionTemplate>({
+    question: '',
     fileURL: '',
-    options: ['', '', '', ''],
-    answer: '',
-    qid: '',
-    loText: '',
+    questionOptions: ['', '', '', ''],
+    questionAnswer: '',
+    questionID: '',
+    questionLearningObjectives: '',
     questionResources: ['', '', '', ''],
+    questionLevel: 1,
+    timestamp: null,
   })
 
   // Used to get the previous question information ( question id) and stores it
   const [previousQuestionsID, setPreviousQuestionsID] = useState<string[]>([])
-  const [data, setData] = useState<any[]>([{}])
+  const [data, setData] = useState<StudentDataTemplate[]>([])
   const [incorrectCollection, setIncorrectCollection] = useState<string[]>([])
-  const [studentResultsData, setStudentResultsData] = useState<any[]>([{}])
+  const [studentResultsData, setStudentResultsData] = useState<
+    StudentDataTemplate[]
+  >([])
 
   // Used as a collection of the following questions
   const [currentLevelQuestions, setCurrentLevelQuestions] = useState<
-    Array<any>
+    QuestionTemplate[]
   >([])
   //*************************
   // Boolean values used to render a specific output
@@ -62,67 +58,84 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
 
   const [LAST_LAYER, setLastLayer] = useState<number>(0)
   const FIRST_LAYER = 1
-  let emptyCollection: any[] = []
+  let emptyCollection: QuestionTemplate[] = []
 
   //Process the questions => Arrange according to levels
   function sortData() {
     if (questions.length === 0) {
       // console.log('Questions do not exist')
-      return
+      return []
     }
-    const mainQs: any[] = [] // Stores level 1 questions
-    const secQs: any[] = [] // Stores level 2 questions
-    const terQs: any[] = [] // Stores level 3 questions
-    const quadQ: any[] = [] // Stores level 4 questions
+    const mainQs: QuestionTemplate[] = [] // Stores level 1 questions
+    const secQs: QuestionTemplate[] = [] // Stores level 2 questions
+    const terQs: QuestionTemplate[] = [] // Stores level 3 questions
+    const quadQ: QuestionTemplate[] = [] // Stores level 4 questions
 
-    questions.forEach((q: any) => {
+    questions.forEach((q: QuestionTemplate) => {
       if (q.questionLevel === 1) {
-        mainQs.push(q)
+        mainQs.push(q) // add one question [{..}]
       } else if (q.questionLevel === 2) {
-        secQs.push(q)
+        secQs.push(q) // add two questions [{..},{..}]
       } else if (q.questionLevel === 3) {
-        terQs.push(q)
+        terQs.push(q) // add four questions [{..},{..},{..},{..}]
       } else if (q.questionLevel === 4) {
-        quadQ.push(q)
+        quadQ.push(q) // add eight questions [{..},{..},{..},{..},{..},{..},{..},{..}]
       }
     })
     return [mainQs, secQs, terQs, quadQ]
   }
 
-  // Start Quiz
-  function startQuiz() {
+  // This useEffect will trigger when 'questions' state changes
+  useEffect(() => {
     /*
-      This function is called when the START button is pressed and starts the quiz
       Here the first question's information is retrieved using getLevel() and set by using setQuestion()
       Remember the default levelNumber =1 
     */
-    setIsStart(true)
-    setIsDisplayFirst(true)
     const sortedQuestions = sortData() // =[mainQs, secQs, terQs,quadQ]
-    // console.log('sorted questions', sortedQuestions)
     if (sortedQuestions) {
+      setAllQuestions(sortedQuestions)
       setAllQuestions(sortedQuestions) // set all available questions
       setLastLayer(sortedQuestions.length)
       setQuestionNumber(1) // set the question count to 1
       // set the first question
-      setQuestion(getLevel(sortedQuestions, levelNumber))
+      setFirstQuestion(getLevel(sortedQuestions, levelNumber))
     }
+  }, [questions])
+
+  function startQuiz() {
+    setIsStart(true)
+    setIsDisplayFirst(true)
   }
 
-  function getLevel(dataArray: any[][], level: number) {
+  function getLevel(dataArray: QuestionTemplate[][], level: number) {
     return dataArray[level - 1]
   }
 
-  function setQuestion(dataArray: any[]) {
-    setQuestionData({
-      questionText: dataArray[questionNumber].question,
-      fileURL: dataArray[questionNumber].fileURL,
-      options: dataArray[questionNumber].questionOptions,
-      answer: dataArray[questionNumber].questionAnswer,
-      qid: dataArray[questionNumber].questionID,
-      loText: dataArray[questionNumber].questionLearningObjectives,
-      questionResources: dataArray[questionNumber].questionResources,
+  function setFirstQuestion(dataArray: QuestionTemplate[]) {
+    setFirstQuestionData({
+      question: dataArray[questionNumber].question,
+      fileURL: dataArray[questionNumber].fileURL
+        ? dataArray[questionNumber].fileURL
+        : '',
+      questionOptions: dataArray[questionNumber].questionOptions,
+      questionAnswer: dataArray[questionNumber].questionAnswer,
+      questionID: dataArray[questionNumber].questionID,
+      questionLearningObjectives:
+        dataArray[questionNumber].questionLearningObjectives,
+      questionResources: dataArray[questionNumber].questionResources
+        ? dataArray[questionNumber].questionResources
+        : ['', '', '', ''],
+      questionLevel: dataArray[questionNumber].questionLevel,
+      timestamp: dataArray[questionNumber].timestamp,
     })
+  }
+
+  function incrementQuestionCount() {
+    // Increment the question count
+    setQuestionNumber(questionNumber + 1)
+    // set the previous question id / keep track of the previous question
+    setPreviousQuestionsID((current) => [...current, getIncorrect()])
+    setData((current) => [...current, studentResults()])
   }
 
   function nextQuestions() {
@@ -136,17 +149,12 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
 
     // Before loading the next questions check if the current question is answered
     if (isAnswered) {
-      // Increment the question count
-      setQuestionNumber(questionNumber + 1)
-      // set the previous question id
-      setPreviousQuestionsID((current) => [...current, getIncorrect()])
-      setData((current) => [...current, studentResults()])
-
+      incrementQuestionCount()
       // If the question number is equal to the available questions therefore all questions are answered
       // if the current level questions(questions to be displayed) are NOT available (which is likely at the beginning)
       //  -compare the question number to the number of available questions(which is likely to be 1 since there is 1 question)
       // if the current level questions(questions to be displayed) ARE AVAILABLE (which is likely at for beyond the main question)
-      //  -compare the question number to the number of the current level questions(which is likely at the first qurstion beginning)
+      //  -compare the question number to the number of the current level questions(which is likely at the first question beginning)
       if (
         currentLevelQuestions.length === 0
           ? questionNumber === allQuestions[levelNumber - 1].length
@@ -168,7 +176,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
           return
         }
 
-        // case 3/Worst case: Answers the ALL question Incorrectly
+        // case 2/Worst case: Answers the ALL question Incorrectly
         if (
           questionNumber === currentLevelQuestions.length &&
           levelNumber === LAST_LAYER
@@ -179,16 +187,15 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
 
         // If there is previous question information
         if (previousQuestionsID.length != 0) {
-
           // Go through all the previous question ids
           const newnew = [...previousQuestionsID, getIncorrect()].filter(
             (prev: string) => {
-              //edit the previous ids to make comparing easier eg 1.1 becomes 11
+              //edit the previous ids to make comparing easier e.g. 1.1 becomes 11
               const prevEdited = prev.replace(/[.]/g, '')
 
               // Filter through the candidate question ids
               const updated = candidateQuestions.filter(
-                (currentQuestionID: any) => {
+                (currentQuestionID: QuestionTemplate) => {
                   //edit the previous ids to make comparing easier
                   // for these ids remove the last character  eg 1.1.1 becomes 11
                   const currEdited = currentQuestionID.questionID
@@ -272,6 +279,8 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
     return studentResultsData[studentResultsData.length - 1]
   }
 
+  // console.log('currentLevelQuestions', currentLevelQuestions)
+
   return (
     <>
       <QuestionCard
@@ -286,7 +295,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
         isStart={isStart}
         isDisplaySecondAndBeyond={isDisplaySecondAndBeyond}
         endQuiz={endQuiz}
-        questionData={questionData}
+        firstQuestionData={firstQuestionData}
       />
       <Results endQuiz={endQuiz} data={data} topicID={topicName} />
     </>

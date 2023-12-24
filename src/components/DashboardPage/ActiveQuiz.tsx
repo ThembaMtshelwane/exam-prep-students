@@ -10,7 +10,7 @@ type ActiveQuizProps = {
                             -From the active quiz list allow the user
                              to pick a quiz to attempt
       
-    When a student picsk a quiz add it to the student's quiz history.
+    When a student picks a quiz add it to the student's quiz history.
     Add the quiz name, if its completed, when was the attempt, and the results
 
 */
@@ -29,8 +29,6 @@ const ActiveQuiz:React.FC<ActiveQuizProps> = ({}) => {
     };
     fetchTopics();
   }, []);
-
-  console.log('topic data for students',topicData)
   return (
     <>
       <Box m ={2} p={5} boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)'>

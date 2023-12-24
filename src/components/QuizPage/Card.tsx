@@ -1,3 +1,4 @@
+import { QuestionTemplate } from '@/src/atom/quizAtoms'
 import { Box, Button, Flex, Stack, Text, Image } from '@chakra-ui/react'
 import React from 'react'
 import NextButton from '../buttons/NextButton'
@@ -5,7 +6,7 @@ import NextButton from '../buttons/NextButton'
 type CardProps = {
   questionNumber: number
   totalNumOfQuestions: number
-  currentQuestionData: any
+  currentQuestionData: QuestionTemplate
   isStart: boolean
   nextQuestions: () => void
   checkAnswer: (
@@ -27,12 +28,12 @@ const Card: React.FC<CardProps> = ({
   checkAnswer,
 }) => {
   const {
-    questionText,
+    question,
     fileURL,
-    options,
-    answer,
-    qid,
-    loText,
+    questionOptions,
+    questionAnswer,
+    questionID,
+    questionLearningObjectives,
     questionResources,
   } = currentQuestionData
 
@@ -46,13 +47,13 @@ const Card: React.FC<CardProps> = ({
       <Text fontWeight={700}>
         Question {questionNumber} of {totalNumOfQuestions}{' '}
       </Text>
-      <Text>{questionText}</Text>
+      <Text>{question}</Text>
 
       {fileURL ? <Image objectFit="cover" src={fileURL} alt="question" /> : ''}
 
       <Flex direction="column" p={2} m={2}>
         <Stack spacing={2} align="center">
-          {options.map((option: string, index: number) => (
+          {questionOptions.map((option: string, index: number) => (
             <Button
               whiteSpace="normal"
               height="auto"
@@ -75,10 +76,10 @@ const Card: React.FC<CardProps> = ({
               onClick={(e) => {
                 checkAnswer(
                   e,
-                  qid,
-                  answer,
-                  questionText,
-                  loText,
+                  questionID,
+                  questionAnswer,
+                  question,
+                  questionLearningObjectives,
                   questionResources
                 )
               }}

@@ -1,20 +1,11 @@
+import { QuestionTemplate } from '@/src/atom/quizAtoms'
 import { Flex, Button, Text, Box, Stack, Image, Link } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
+import { log } from 'console'
 
 import React from 'react'
 import BackButton from '../buttons/BackButton'
 import StartButton from '../buttons/StartButton'
 import Card from './Card'
-
-interface QuestionData {
-  questionText: string
-  fileURL: string
-  options: string[]
-  qid: string
-  answer: string
-  loText: string
-  questionResources: string[]
-}
 
 type QuestionCardProps = {
   startQuiz: any
@@ -28,7 +19,7 @@ type QuestionCardProps = {
   isStart: boolean
   isDisplaySecondAndBeyond: boolean
   endQuiz: boolean
-  questionData: QuestionData
+  firstQuestionData: QuestionTemplate
 }
 const QuestionCard: React.FC<QuestionCardProps> = ({
   startQuiz,
@@ -42,7 +33,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
   isStart,
   isDisplaySecondAndBeyond,
   endQuiz,
-  questionData,
+  firstQuestionData,
 }) => {
 
   return (
@@ -63,8 +54,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
       {isDisplayFirst && (
         <Card
           questionNumber={questionNumber}
-          totalNumOfQuestions={allQuestions[levelNumber - 1].length}
-          currentQuestionData={questionData}
+          totalNumOfQuestions={1}
+          currentQuestionData={firstQuestionData}
           isStart={isStart}
           nextQuestions={nextQuestions}
           checkAnswer={checkAnswer}
