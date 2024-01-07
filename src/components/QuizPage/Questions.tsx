@@ -31,7 +31,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, topicName }) => {
     questionLearningObjectives: '',
     questionResources: ['', '', '', ''],
     questionLevel: 1,
-    timestamp: null,
+    timestamp: new Date('1999-03-01'),
   })
 
   // Used to get the previous question information ( question id) and stores it
