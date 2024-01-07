@@ -1,10 +1,10 @@
 import { Timestamp } from '@google-cloud/firestore'
-import { atom } from 'recoil'
 
 export interface Topic {
   courseCode: string
   lectureID: string
   createdAt: Timestamp
+  dueDate: any
   listOfLearningObjectives: string[]
   numberOfLearningObjectives: string
   topicID: string
@@ -19,7 +19,7 @@ export interface QuestionTemplate {
   questionLevel: number
   questionOptions: string[]
   questionResources?: string[]
-  timestamp: any
+  timestamp: Date
 }
 
 export interface StudentDataTemplate {
