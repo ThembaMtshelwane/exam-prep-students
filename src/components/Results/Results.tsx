@@ -1,19 +1,16 @@
 import {
-  border,
   Box,
   Button,
   Flex,
   Link,
   List,
   ListItem,
-  Stack,
   Text,
 } from '@chakra-ui/react'
-import { doc, runTransaction, serverTimestamp } from 'firebase/firestore'
+import { doc, runTransaction } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { auth, firestore } from '@/src/firebase/clientApp'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useRouter } from 'next/router'
 
 type ResultsProps = {
   data: any[]
@@ -23,20 +20,19 @@ type ResultsProps = {
 
 const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
   const [user] = useAuthState(auth)
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  // const [error, setError] = useState('')
+  // const [loading, setLoading] = useState(false)
   const [sendResults, setSendResults] = useState(false)
-  const router = useRouter()
-  const [userID, setUserID] = useState<any>('')
+  // const [userID, setUserID] = useState<any>('')
 
   useEffect(() => {
-    const getAllIds = () => {
-      setUserID(user?.uid)
-    }
-    getAllIds()
+    // const getAllIds = () => {
+    //   setUserID(user?.uid)
+    // }
+    // getAllIds()
   }, [])
   const attemptRecord = async () => {
-    setLoading(true)
+    // setLoading(true)
     setSendResults(true)
 
     /* * * * *  Send data to database * * * * */
@@ -55,10 +51,10 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
         })
       })
     } catch (error: any) {
-      console.log('handleCreateQuiz error ', error)
-      setError(error.message)
+      console.log('Send attempt record error ', error)
+      // setError(error.message)
     }
-    setLoading(false)
+    // setLoading(false)
   }
   return (
     <>
