@@ -56,7 +56,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
     <>
       <Box m={2} p={5} boxShadow="1px 1px 3px 2px rgba(97, 143, 217, .25)">
         <Box fontSize="16px" fontWeight={700} color="gray.700" p={2}>
-          Created Quizzes
+          Quizzes
         </Box>
         <Flex direction="row" pr={2} m={2}>
           <List width="100%">
@@ -90,11 +90,14 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
                               {prevID.numberOfLearningObjectives}
                             </Text>
                             {/* <Text>Attempts: {0}</Text> */}
+
                             <Text>
-                              Created at:
-                              {new Date(
-                                prevID.createdAt.seconds * 1000
-                              ).toLocaleDateString()}
+                              Created on:{' '}
+                              {prevID.dueDate
+                                ? new Date(
+                                    prevID.createdAt.seconds * 1000
+                                  ).toLocaleDateString()
+                                : 'No Due Date'}
                             </Text>
 
                             <Text>
@@ -110,7 +113,8 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
                       </Link>
                     </ListItem>
                   )
-                  // ) :
+                  // ) 
+                  //:
                   //   ''
                 )
               ) : (
