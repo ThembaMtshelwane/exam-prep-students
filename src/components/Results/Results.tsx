@@ -108,50 +108,46 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
             {data.map((prevID: any, index: number) => {
               return (
                 <ListItem key={index + prevID.question}>
-                  {index === 0 ? (
-                    ''
-                  ) : (
-                    <Box
-                      width="80%"
-                      key={index * 9}
-                      p={2}
-                      margin="auto"
-                      boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
-                    >
-                      <Flex flexDirection="column">
-                        <Text fontSize="lg">
-                          Question: <strong>{prevID.question}</strong>
-                        </Text>
+                  <Box
+                    width="80%"
+                    key={index * 9}
+                    p={2}
+                    margin="auto"
+                    boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
+                  >
+                    <Flex flexDirection="column">
+                      <Text fontSize="lg">
+                        Question: <strong>{prevID.question}</strong>
+                      </Text>
+                      <Text>
+                        Answer: <strong>{prevID.answer}</strong>
+                      </Text>
+                      <Text>
+                        Outcome: <strong>{prevID.result}</strong>
+                      </Text>
+                      {prevID.loText ? (
                         <Text>
-                          Answer: <strong>{prevID.answer}</strong>
+                          Learning Objective: <strong>{prevID.loText}</strong>
                         </Text>
-                        <Text>
-                          Outcome: <strong>{prevID.result}</strong>
-                        </Text>
-                        {prevID.loText ? (
-                          <Text>
-                            Learning Objective: <strong>{prevID.loText}</strong>
+                      ) : null}
+                      {prevID.resources.filter(
+                        (item: string) => item.trim() !== ''
+                      ).length > 0 ? (
+                        <Box>
+                          <Text fontSize="lg" fontWeight="bold">
+                            Resources:
                           </Text>
-                        ) : null}
-                        {prevID.resources.filter(
-                          (item: string) => item.trim() !== ''
-                        ).length > 0 ? (
-                          <Box>
-                            <Text fontSize="lg" fontWeight="bold">
-                              Resources:
-                            </Text>
-                            {prevID.resources.map(
-                              (resource: string, index: number) => (
-                                <Text key={index + resource}>{resource}</Text>
-                              )
-                            )}
-                          </Box>
-                        ) : (
-                          ''
-                        )}
-                      </Flex>
-                    </Box>
-                  )}
+                          {prevID.resources.map(
+                            (resource: string, index: number) => (
+                              <Text key={index + resource}>{resource}</Text>
+                            )
+                          )}
+                        </Box>
+                      ) : (
+                        ''
+                      )}
+                    </Flex>
+                  </Box>
                 </ListItem>
               )
             })}
