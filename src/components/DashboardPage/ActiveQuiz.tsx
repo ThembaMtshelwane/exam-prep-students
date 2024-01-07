@@ -43,12 +43,12 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
 
     if (inputDate) {
       if (new Date(inputDate.seconds) < currentDate) {
-        return false // before due date, therefore show quiz
+        return true // before due date, therefore show quiz
       } else {
-        return true
+        return false
       }
     } else {
-      return true
+      return false
     }
   }
 
@@ -62,9 +62,8 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
           <List width="100%">
             <Stack spacing={5}>
               {topicData.length != 0 ? (
-                topicData.map(
-                  (prevID: Topic, index: number) => (
-                    // compareDates(prevID.dueDate) ? (
+                topicData.map((prevID: Topic, index: number) =>
+                  compareDates(prevID.dueDate) ? (
                     <ListItem key={index}>
                       <Link href={`quiz/${prevID.topicID}`}>
                         <Button
@@ -112,10 +111,9 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
                         </Button>
                       </Link>
                     </ListItem>
+                  ) : (
+                    ''
                   )
-                  // ) 
-                  //:
-                  //   ''
                 )
               ) : (
                 <Flex direction="column">
