@@ -76,7 +76,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
                 topicData.map((prevID: Topic, index: number) =>
                   compareDates(prevID.dueDate) ? (
                     <Flex justifyContent="center">
-                      <ListItem key={index}>
+                      <ListItem key={prevID.topicID }>
                         <Link href={`quiz/${prevID.topicID}`}>
                           <Button
                             fontWeight={700}
@@ -106,7 +106,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
                               {/* <Text>Attempts: {0}</Text> */}
                               <Text>
                                 Created on:{' '}
-                                {prevID.dueDate
+                                {prevID.createdAt
                                   ? new Date(
                                       prevID.createdAt.seconds * 1000
                                     ).toLocaleDateString('en-GB')
