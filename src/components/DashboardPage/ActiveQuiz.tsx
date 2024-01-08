@@ -60,23 +60,44 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
 
   return (
     <>
-      <Box m={2} p={5} boxShadow="1px 1px 3px 2px rgba(97, 143, 217, .25)">
+      <Box
+        m={2}
+        p={5}
+        width="100%"
+        boxShadow="1px 1px 3px 2px rgba(97, 143, 217, .25)"
+        position="relative"
+      >
         {/* <Box fontSize="16px" fontWeight={700} color="gray.700" p={2}>
           Quizzes
         </Box> */}
-        {/* <Select>
+        {/* <Select
+          width="100px"
+          position="absolute"
+          right="50px"
+          zIndex={2}
+          _hover={{
+            bg: '#265e9e',
+            color: 'white',
+            transform: 'scale(0.98)',
+          }}
+        >
           <option value="option1">Active</option>
           <option value="option2">All</option>
           <option value="option3">Previous</option>
         </Select> */}
-        <Flex direction="column" alignItems="center" justifyContent="center">
+        <Flex
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          // marginTop="55px"
+        >
           <List>
             <Stack spacing="20px">
               {topicData.length != 0 ? (
                 topicData.map((prevID: Topic, index: number) =>
                   compareDates(prevID.dueDate) ? (
-                    <Flex justifyContent="center">
-                      <ListItem key={prevID.topicID }>
+                    <Flex justifyContent="center" key={prevID.topicID}>
+                      <ListItem>
                         <Link href={`quiz/${prevID.topicID}`}>
                           <Button
                             fontWeight={700}
