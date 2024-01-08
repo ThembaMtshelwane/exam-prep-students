@@ -8,6 +8,7 @@ import {
   Stack,
   Text,
   Link,
+  Select,
 } from '@chakra-ui/react'
 import { Timestamp } from '@google-cloud/firestore'
 import React, { useEffect, useState } from 'react'
@@ -27,7 +28,7 @@ type ActiveQuizProps = {
 }
 
 const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
-  const [loading, setLoading] = useState(false)
+  const [loadingMap, setLoadingMap] = useState<{ [key: string]: boolean }>({})
   const [topicData, setTopics] = useState<Topic[]>([])
 
   useEffect(() => {
@@ -52,65 +53,79 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
     }
   }
 
+  function loadPage(topicID: string) {
+    setLoadingMap({ ...loadingMap, [topicID]: true })
+    // Perform other loading operations if needed
+  }
+
   return (
     <>
       <Box m={2} p={5} boxShadow="1px 1px 3px 2px rgba(97, 143, 217, .25)">
-        <Box fontSize="16px" fontWeight={700} color="gray.700" p={2}>
+        {/* <Box fontSize="16px" fontWeight={700} color="gray.700" p={2}>
           Quizzes
-        </Box>
-        <Flex direction="row" pr={2} m={2}>
-          <List width="100%">
-            <Stack spacing={5}>
+        </Box> */}
+        {/* <Select>
+          <option value="option1">Active</option>
+          <option value="option2">All</option>
+          <option value="option3">Previous</option>
+        </Select> */}
+        <Flex direction="column" alignItems="center" justifyContent="center">
+          <List>
+            <Stack spacing="20px">
               {topicData.length != 0 ? (
                 topicData.map((prevID: Topic, index: number) =>
                   compareDates(prevID.dueDate) ? (
-                    <ListItem key={index}>
-                      <Link href={`quiz/${prevID.topicID}`}>
-                        <Button
-                          fontWeight={700}
-                          bg="white"
-                          boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
-                          p="10px"
-                          _hover={{
-                            bg: '#265e9e',
-                            color: 'white',
-                            transform: 'scale(0.98)',
-                          }}
-                          isLoading={loading}
-                          width="95%"
-                          height="50%"
-                          borderRadius={0}
-                        >
-                          <Flex direction="column">
-                            <Text>Course Code: {prevID.courseCode}</Text>
-                            <Text>Topic: {prevID.topicID}</Text>
-                            <Text>
-                              Number of Learning Objectives:{' '}
-                              {prevID.numberOfLearningObjectives}
-                            </Text>
-                            {/* <Text>Attempts: {0}</Text> */}
+                    <Flex justifyContent="center">
+                      <ListItem key={index}>
+                        <Link href={`quiz/${prevID.topicID}`}>
+                          <Button
+                            fontWeight={700}
+                            bg="white"
+                            boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
+                            p="10px"
+                            _hover={{
+                              bg: '#265e9e',
+                              color: 'white',
+                              transform: 'scale(0.98)',
+                            }}
+                            isLoading={loadingMap[prevID.topicID]}
+                            width="100%"
+                            height="100%"
+                            borderRadius="2%"
+                            onClick={() => loadPage(prevID.topicID)}
+                          >
+                            <Flex direction="column">
+                              <Text fontSize="1.8rem">
+                                Topic: {prevID.topicID}
+                              </Text>
+                              <Text>Course Code: {prevID.courseCode}</Text>
+                              <Text>
+                                Number of Learning Objectives:{' '}
+                                {prevID.numberOfLearningObjectives}
+                              </Text>
+                              {/* <Text>Attempts: {0}</Text> */}
+                              <Text>
+                                Created on:{' '}
+                                {prevID.dueDate
+                                  ? new Date(
+                                      prevID.createdAt.seconds * 1000
+                                    ).toLocaleDateString('en-GB')
+                                  : 'No Due Date'}
+                              </Text>
 
-                            <Text>
-                              Created on:{' '}
-                              {prevID.dueDate
-                                ? new Date(
-                                    prevID.createdAt.seconds * 1000
-                                  ).toLocaleDateString()
-                                : 'No Due Date'}
-                            </Text>
-
-                            <Text>
-                              Due at:
-                              {prevID.dueDate
-                                ? new Date(
-                                    prevID.dueDate.seconds * 1000
-                                  ).toLocaleDateString()
-                                : 'No Due Date'}
-                            </Text>
-                          </Flex>
-                        </Button>
-                      </Link>
-                    </ListItem>
+                              <Text>
+                                Due at:
+                                {prevID.dueDate
+                                  ? new Date(
+                                      prevID.dueDate.seconds * 1000
+                                    ).toLocaleDateString('en-GB')
+                                  : 'No Due Date'}
+                              </Text>
+                            </Flex>
+                          </Button>
+                        </Link>
+                      </ListItem>
+                    </Flex>
                   ) : (
                     ''
                   )
