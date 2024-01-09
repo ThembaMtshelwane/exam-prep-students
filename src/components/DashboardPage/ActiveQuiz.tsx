@@ -10,7 +10,7 @@ import {
   Link,
   Select,
 } from '@chakra-ui/react'
-import { Timestamp } from '@google-cloud/firestore'
+// import { Timestamp } from '@google-cloud/firestore'
 import React, { useEffect, useState } from 'react'
 import { getTopicInfo } from '../../pages/api/TopicData'
 
@@ -39,19 +39,19 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
     fetchTopics()
   }, [])
 
-  function compareDates(inputDate: Timestamp): boolean {
-    const currentDate = new Date()
+  // function compareDates(inputDate: Timestamp): boolean {
+  //   const currentDate = new Date()
 
-    if (inputDate) {
-      if (new Date(inputDate.seconds) < currentDate) {
-        return true // before due date, therefore show quiz
-      } else {
-        return false
-      }
-    } else {
-      return false
-    }
-  }
+  //   if (inputDate) {
+  //     if (new Date(inputDate.seconds) < currentDate) {
+  //       return true // before due date, therefore show quiz
+  //     } else {
+  //       return false
+  //     }
+  //   } else {
+  //     return false
+  //   }
+  // }
 
   function loadPage(topicID: string) {
     setLoadingMap({ ...loadingMap, [topicID]: true })
@@ -94,8 +94,9 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
           <List>
             <Stack spacing="20px">
               {topicData.length != 0 ? (
-                topicData.map((prevID: Topic, index: number) =>
-                  compareDates(prevID.dueDate) ? (
+                topicData.map(
+                  (prevID: Topic, index: number) => (
+                    //compareDates(prevID.dueDate) ? (
                     <Flex justifyContent="center" key={prevID.topicID}>
                       <ListItem>
                         <Link href={`quiz/${prevID.topicID}`}>
@@ -131,25 +132,26 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
                                   ? new Date(
                                       prevID.createdAt.seconds * 1000
                                     ).toLocaleDateString('en-GB')
-                                  : 'No Due Date'}
+                                  : 'No Date'}
                               </Text>
 
-                              <Text>
+                              {/* <Text>
                                 Due at:
                                 {prevID.dueDate
                                   ? new Date(
                                       prevID.dueDate.seconds * 1000
                                     ).toLocaleDateString('en-GB')
                                   : 'No Due Date'}
-                              </Text>
+                              </Text> */}
                             </Flex>
                           </Button>
                         </Link>
                       </ListItem>
                     </Flex>
-                  ) : (
-                    ''
                   )
+                  //) : (
+                  //  ''
+                  //)
                 )
               ) : (
                 <Flex direction="column">

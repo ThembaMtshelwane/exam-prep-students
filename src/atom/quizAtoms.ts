@@ -4,7 +4,7 @@ export interface Topic {
   courseCode: string
   lectureID: string
   createdAt: Timestamp
-  dueDate: Timestamp
+  // dueDate: Timestamp
   listOfLearningObjectives: string[]
   numberOfLearningObjectives: string
   topicID: string
