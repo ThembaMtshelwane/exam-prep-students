@@ -49,7 +49,13 @@ const Card: React.FC<CardProps> = ({
       </Text>
       <Text>{question}</Text>
 
-      {fileURL ? <Image objectFit="cover" src={fileURL} alt="question" /> : ''}
+      {fileURL ? (
+        <Flex flexDirection="column" width="50%" height="50%" margin="auto">
+          <Image objectFit="cover" src={fileURL} alt="question" />
+        </Flex>
+      ) : (
+        ''
+      )}
 
       <Flex direction="column" p={2} m={2}>
         <Stack spacing={2} align="center">

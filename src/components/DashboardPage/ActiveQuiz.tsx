@@ -95,11 +95,11 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
             <Stack spacing="20px">
               {topicData.length != 0 ? (
                 topicData.map(
-                  (prevID: Topic, index: number) => (
+                  (quizInfo: Topic, index: number) => (
                     //compareDates(prevID.dueDate) ? (
-                    <Flex justifyContent="center" key={prevID.topicID}>
+                    <Flex justifyContent="center" key={quizInfo.topicID}>
                       <ListItem>
-                        <Link href={`quiz/${prevID.topicID}`}>
+                        <Link href={`quiz/${quizInfo.topicID}`}>
                           <Button
                             fontWeight={700}
                             bg="white"
@@ -110,27 +110,27 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
                               color: 'white',
                               transform: 'scale(0.98)',
                             }}
-                            isLoading={loadingMap[prevID.topicID]}
+                            isLoading={loadingMap[quizInfo.topicID]}
                             width="100%"
                             height="100%"
                             borderRadius="2%"
-                            onClick={() => loadPage(prevID.topicID)}
+                            onClick={() => loadPage(quizInfo.topicID)}
                           >
                             <Flex direction="column">
                               <Text fontSize="1.8rem">
-                                Topic: {prevID.topicID}
+                                Topic: {quizInfo.topicID}
                               </Text>
-                              <Text>Course Code: {prevID.courseCode}</Text>
+                              <Text>Course Code: {quizInfo.courseCode}</Text>
                               <Text>
                                 Number of Learning Objectives:{' '}
-                                {prevID.numberOfLearningObjectives}
+                                {quizInfo.numberOfLearningObjectives}
                               </Text>
                               {/* <Text>Attempts: {0}</Text> */}
                               <Text>
                                 Created on:{' '}
-                                {prevID.createdAt
+                                {quizInfo.createdAt
                                   ? new Date(
-                                      prevID.createdAt.seconds * 1000
+                                      quizInfo.createdAt.seconds * 1000
                                     ).toLocaleDateString('en-GB')
                                   : 'No Date'}
                               </Text>
