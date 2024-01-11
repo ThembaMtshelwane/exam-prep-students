@@ -85,26 +85,32 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
           <option value="option2">All</option>
           <option value="option3">Previous</option>
         </Select> */}
-        <Flex
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          // marginTop="55px"
-        >
+        <Flex direction="column" alignItems="center" justifyContent="center">
           <List>
             <Stack spacing="20px">
               {topicData.length != 0 ? (
                 topicData.map(
                   (quizInfo: Topic, index: number) => (
                     //compareDates(prevID.dueDate) ? (
-                    <Flex justifyContent="center" key={quizInfo.topicID}>
-                      <ListItem>
+                    <Flex
+                      justifyContent="center"
+                      key={quizInfo.topicID}
+                      width="100%"
+                      // border="2px solid black"
+                    >
+                      <ListItem
+                        // border="2px solid red"
+                        padding={2}
+                        m="0px"
+                        width="100%"
+                      >
                         <Link href={`quiz/${quizInfo.topicID}`}>
                           <Button
                             fontWeight={700}
                             bg="white"
                             boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
                             p="10px"
+                            margin={0}
                             _hover={{
                               bg: '#265e9e',
                               color: 'white',
@@ -114,6 +120,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({}) => {
                             width="100%"
                             height="100%"
                             borderRadius="2%"
+                            // border="2px solid blue"
                             onClick={() => loadPage(quizInfo.topicID)}
                           >
                             <Flex direction="column">
