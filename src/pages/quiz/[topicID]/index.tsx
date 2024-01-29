@@ -16,12 +16,18 @@ type QuizPageProps = {
 }
 
 const QuizPage: React.FC<QuizPageProps> = ({ topicQuestionData, name }) => {
-  // console.log('topicQuestionData', topicQuestionData)
+  console.log('topicQuestionData', topicQuestionData)
+
+  function areAllQuestionsDefined(data: QuestionTemplate[]): boolean {
+    return data.every((item) => item.question !== '')
+  }
+
   return (
     <>
       <PageContent>
         <QuizInfo topicName={name} />
-        {topicQuestionData.length != 0 ? (
+        {topicQuestionData.length != 0 &&
+        areAllQuestionsDefined(topicQuestionData) ? (
           <Questions questions={topicQuestionData} topicName={name} />
         ) : (
           <Box borderRadius={5} m={2} p={5}>
