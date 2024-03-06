@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Link,
-  List,
-  ListItem,
-  Text,
-} from '@chakra-ui/react'
+import { Box, Button, Flex, Link, List, ListItem, Text } from '@chakra-ui/react'
 import { doc, runTransaction } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { auth, firestore } from '@/src/firebase/clientApp'
@@ -133,11 +125,19 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
                           <Text fontSize="lg" fontWeight="bold">
                             Resources:
                           </Text>
-                          {prevID.resources.map(
-                            (resource: string, index: number) => (
-                              <Text key={index + resource}>{resource}</Text>
-                            )
-                          )}
+                          <Flex flexDirection="column">
+                            {prevID.resources.map(
+                              (resource: string, index: number) => (
+                                <Link
+                                  target="_blank"
+                                  key={index + resource}
+                                  href={resource}
+                                >
+                                  {resource}
+                                </Link>
+                              )
+                            )}
+                          </Flex>
                         </Box>
                       ) : (
                         ''
