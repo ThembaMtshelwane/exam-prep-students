@@ -3,6 +3,7 @@ import { doc, runTransaction } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { auth, firestore } from '@/src/firebase/clientApp'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import BackButton from '../buttons/BackButton'
 
 type ResultsProps = {
   data: any[]
@@ -66,22 +67,7 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
             Show Results{' '}
           </Button>
           <br />
-
-          <Link href="/dashboard">
-            <Button
-              bg="#265e9e"
-              color="white"
-              boxShadow="5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)"
-              _hover={{
-                transform: 'scale(0.95)',
-              }}
-              width="100%"
-            >
-              {' '}
-              Back{' '}
-            </Button>
-            <br />
-          </Link>
+          <BackButton />
         </Flex>
       )}
 
@@ -98,7 +84,7 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
                 <ListItem key={index + prevID.question}>
                   <Box
                     width="80%"
-                    key={index * 9}
+                    key={index}
                     p={2}
                     margin="auto"
                     boxShadow="1px 1px 1px 2px rgba(97, 143, 217, .75)"
@@ -149,20 +135,8 @@ const Results: React.FC<ResultsProps> = ({ data, endQuiz, topicID }) => {
             })}
           </List>
           <br />
-          <Link href="/dashboard">
-            <Button
-              bg="#265e9e"
-              color="white"
-              boxShadow="5px 5px 5px 2px rgba(97, 143, 217, .75), 0 1px 1px rgba(0, 0, 0, .15)"
-              _hover={{
-                transform: 'scale(0.95)',
-              }}
-              width="100%"
-            >
-              Back BB
-            </Button>
-            <br />
-          </Link>
+          <BackButton />
+          <br />
         </Box>
       )}
     </>
