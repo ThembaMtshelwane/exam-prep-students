@@ -1,34 +1,31 @@
-import { Flex } from '@chakra-ui/react';
-import React from 'react';
+import { Flex } from '@chakra-ui/react'
+import React from 'react'
 
 interface Props {
-    children: React.ReactNode;
+  children: React.ReactNode
 }
 
-const PageContent:React.FC<Props> = ({children}) => {
-    
-    return (
-        <>
-        {/* Outter most layer = The grey background */}
-        <Flex justifyContent='center' p='16px 0px'
-         >
-            {/* The main layer = The white foreground */}
-            <Flex 
-            direction='column'  
-            width='95%'
-            height='100%'
-            alignContent='center'
-            maxWidth='860px'
-            bg='white'
-            borderRadius='0'  
-            m={1}  
-            p={5}
-            boxShadow='1px 1px 3px 2px rgba(97, 143, 217, .25)'
-            >
-                {children && children}
-            </Flex> 
+const PageContent: React.FC<Props> = ({ children }) => {
+  return (
+    <>
+      {/* Outer layer - Grey background */}
+      <Flex justifyContent="center" p={{ base: '8px', md: '16px 0px' }}>
+        {/* Inner layer - White foreground */}
+        <Flex
+          direction="column"
+          width="100%"
+          maxWidth={{ base: '100%', md: '850px', lg: '1024px' }}
+          bg="white"
+          borderRadius="lg"
+          m={{ base: 0, md: 1 }}
+          p={{ base: 3, md: 5 }}
+          boxShadow="md"
+        >
+          {children}
         </Flex>
-        </>
-    )
+      </Flex>
+    </>
+  )
 }
-export default PageContent;
+
+export default PageContent
