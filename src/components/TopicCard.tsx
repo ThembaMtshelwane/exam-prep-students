@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text, Link } from '@chakra-ui/react'
+import { Box, Button, Flex, Text, Link, Spinner } from '@chakra-ui/react'
 import React from 'react'
 import { Topic } from '@/src/atom/quizAtoms'
 
@@ -37,28 +37,33 @@ const TopicCard: React.FC<TopicCardProps> = ({
             color: 'white',
             transform: 'scale(1.02)',
           }}
-          isLoading={isLoading}
           onClick={() => onLoadPage(quizInfo.topicID)}
         >
-          <Flex direction="column" w="100%">
-            <Text fontSize="lg" fontWeight="bold" isTruncated>
-              {quizInfo.topicID}
-            </Text>
-            <Text fontSize="sm" color="gray.600 hover:gray.700" isTruncated>
-              Course Code: {quizInfo.courseCode}
-            </Text>
-            <Text fontSize="sm" color="gray.600 hover:gray.700">
-              Objectives: {quizInfo.numberOfLearningObjectives}
-            </Text>
-            <Text fontSize="xs" color="gray.500 hover:gray.700">
-              Created on:{' '}
-              {quizInfo.createdAt
-                ? new Date(
-                    quizInfo.createdAt.seconds * 1000
-                  ).toLocaleDateString('en-GB')
-                : 'No Date'}
-            </Text>
-          </Flex>
+          {isLoading ? (
+            <Flex w="100%" h="100%" justifyContent="center" alignItems="center">
+              <Spinner size="md" color="gray.400" />
+            </Flex>
+          ) : (
+            <Flex direction="column" w="100%">
+              <Text fontSize="lg" fontWeight="bold" isTruncated>
+                {quizInfo.topicID}
+              </Text>
+              <Text fontSize="sm" color="gray.600 hover:gray.700" isTruncated>
+                Course Code: {quizInfo.courseCode}
+              </Text>
+              <Text fontSize="sm" color="gray.600 hover:gray.700">
+                Objectives: {quizInfo.numberOfLearningObjectives}
+              </Text>
+              <Text fontSize="xs" color="gray.500 hover:gray.700">
+                Created on:{' '}
+                {quizInfo.createdAt
+                  ? new Date(
+                      quizInfo.createdAt.seconds * 1000
+                    ).toLocaleDateString('en-GB')
+                  : 'No Date'}
+              </Text>
+            </Flex>
+          )}
         </Button>
       </Link>
     </Box>
